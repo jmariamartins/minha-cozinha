@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>A Minha Cozinha</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d98ba">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="A Minha Cozinha">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde:        #0d98ba;
+  --verde-claro:  #e6f7fb;
+  --verde-mid:    #3ab5d4;
+  --verde-escuro: #0a7a94;   /* nav title text, section headings */
+  --hero-inicio:  #0a7a94;   /* hero gradient START */
+  --hero-fim:     #00cccc;   /* hero gradient END  */
+  --areia:#f7f4ef; --branco:#ffffff; --texto:#1c1c1c; --texto-suave:#6b6b6b;
+  --borda:#e4ddd4; --aviso:#c47c00; --aviso-fundo:#fdf3dc;
+  --radius:14px; --radius-sm:8px;
+  --shadow:       0 2px 12px rgba(13,152,186,0.09); --shadow-lg:0 8px 32px rgba(13,152,186,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--areia);color:var(--texto);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+.nav{background:var(--branco);border-bottom:1px solid var(--borda);padding:0 16px;height:56px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200}
+.nav-back{background:none;border:none;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--verde);transition:background .15s}
+.nav-back:hover{background:var(--verde-claro)}
+.nav-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--verde-escuro);flex:1}
+
+/* SCREENS */
+.screen{display:none;min-height:calc(100vh - 56px);padding-bottom:80px}
+.screen.active{display:block}
+
+/* HOME */
+.home-hero{background:linear-gradient(160deg,var(--hero-inicio) 0%,var(--hero-fim) 100%);padding:36px 20px 40px;color:white;position:relative;overflow:hidden}
+.home-hero::after{content:'🌿';position:absolute;right:-10px;bottom:-20px;font-size:120px;opacity:.08;transform:rotate(-20deg);pointer-events:none}
+.home-hero h1{font-family:'Fraunces',serif;font-size:32px;font-weight:900;margin-bottom:6px}
+.home-hero p{font-size:14px;opacity:.8}
+.home-actions{padding:20px 16px;display:flex;flex-direction:column;gap:10px}
+.home-btn{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:18px 16px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;box-shadow:var(--shadow);transition:transform .12s,box-shadow .12s;width:100%}
+.home-btn:active{transform:scale(.98);box-shadow:none}
+.home-btn-icon{font-size:28px;width:44px;height:44px;background:var(--verde-claro);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.home-btn-text h3{font-size:15px;font-weight:600;color:var(--texto);margin-bottom:2px}
+.home-btn-text p{font-size:12px;color:var(--texto-suave)}
+.home-import{margin:0 16px 16px;padding:14px 16px;background:var(--verde-claro);border:1.5px dashed var(--verde-mid);border-radius:var(--radius);display:flex;align-items:center;gap:12px;cursor:pointer}
+.recipes-count{font-size:12px;color:var(--verde);font-weight:600}
+
+/* IMPORT */
+.import-wrap{padding:20px}
+.import-card{background:var(--branco);border-radius:var(--radius);padding:20px;border:1px solid var(--borda);margin-bottom:14px}
+.import-card h3{font-family:'Fraunces',serif;font-size:17px;margin-bottom:8px}
+.import-card p{font-size:14px;color:var(--texto-suave);line-height:1.6}
+.import-label{display:block;background:var(--verde);color:white;padding:15px;border-radius:var(--radius);text-align:center;font-weight:600;font-size:15px;cursor:pointer;margin-bottom:12px}
+.import-recipe-row{padding:9px 12px;background:var(--branco);border-radius:var(--radius-sm);margin-bottom:4px;font-size:13px;border:1px solid var(--borda);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.import-recipe-row .warn{color:var(--aviso);font-size:11px}
+.import-recipe-row .ok{color:var(--verde);font-size:11px}
+.btn-danger{margin-top:16px;width:100%;padding:12px;background:white;color:#c62828;border:1px solid #ef9a9a;border-radius:var(--radius);font-size:14px;cursor:pointer;font-family:inherit}
+.debug-box{background:#1c1c1c;color:#a3e6b0;font-family:monospace;font-size:11px;padding:12px;border-radius:var(--radius-sm);margin-top:8px;white-space:pre-wrap;max-height:200px;overflow-y:auto;display:none}
+
+/* RECIPE LIST */
+.search-bar{padding:10px 14px;background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:56px;z-index:90}
+.search-input{width:100%;padding:9px 14px;border:1px solid var(--borda);border-radius:24px;font-size:14px;background:var(--areia);outline:none;font-family:inherit}
+.search-input:focus{border-color:var(--verde-mid)}
+.filters-wrap{background:var(--branco);border-bottom:1px solid var(--borda);padding:8px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:calc(56px + 52px);z-index:89}
+.filter-row{display:flex;align-items:center;gap:8px;min-height:32px}
+.filter-label{font-size:10px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.4px;width:52px;flex-shrink:0}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{flex-shrink:0;padding:5px 13px;border:1px solid var(--borda);border-radius:20px;font-size:13px;cursor:pointer;background:var(--branco);white-space:nowrap;transition:all .13s;font-family:inherit}
+.chip.active{background:var(--verde);color:white;border-color:var(--verde)}
+.chip.excl-active{background:#fce4ec;color:#c62828;border-color:#ef9a9a}
+.recipes-grid{padding:14px;display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:600px){.recipes-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.recipes-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:1200px){.recipes-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* RECIPE CARD */
+.recipe-card{background:var(--branco);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;transition:transform .12s,box-shadow .12s;border:1px solid var(--borda);overflow:hidden}
+.recipe-card:active{transform:scale(.98);box-shadow:none}
+.recipe-card-body{padding:14px}
+.recipe-card-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;margin-bottom:9px;color:var(--texto);line-height:1.3}
+.recipe-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.recipe-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+.recipe-card-time{font-size:12px;color:var(--texto-suave)}
+.mode-icons{display:flex;gap:2px}
+.badge{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.badge-cat{background:var(--verde-claro);color:var(--verde)}
+.badge-facil{background:#e8f5e9;color:#2e7d32}
+.badge-medio{background:#fff3e0;color:#c47c00}
+.badge-dificil{background:#fce4ec;color:#c62828}
+.badge-prot{background:#e3f2fd;color:#1565c0}
+.badge-carb{background:#f3e5f5;color:#6a1b9a}
+.badge-fat{background:#fce4ec;color:#ad1457}
+.badge-frito{background:#fff8e1;color:#f57f17}
+.prep-chip{font-size:11px;color:var(--aviso);margin-top:6px}
+
+/* RECIPE DETAIL */
+.recipe-hero{background:linear-gradient(155deg,var(--hero-inicio) 0%,var(--hero-fim) 100%);padding:22px 18px 28px;color:white}
+.recipe-hero h1{font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1.2;margin-bottom:10px}
+.recipe-hero-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;opacity:.88}
+.prep-banner{background:var(--aviso-fundo);border-left:4px solid var(--aviso);padding:12px 16px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.portions-row{background:var(--branco);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--borda)}
+.portions-label{font-size:14px;font-weight:600}
+.portions-stepper{display:flex;align-items:center;gap:16px}
+.stepper-btn{width:34px;height:34px;border:2px solid var(--verde);background:white;color:var(--verde);border-radius:50%;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1;font-family:inherit;transition:background .13s,color .13s}
+.stepper-btn:active{background:var(--verde);color:white}
+.stepper-value{font-size:17px;font-weight:700;min-width:22px;text-align:center}
+.nutrition-bar{background:var(--branco);padding:12px 0;border-bottom:1px solid var(--borda);display:flex}
+.nut-item{flex:1;text-align:center;border-right:1px solid var(--borda)}
+.nut-item:last-child{border-right:none}
+.nut-val{font-size:17px;font-weight:700;color:var(--verde);font-family:'Fraunces',serif}
+.nut-lbl{font-size:10px;color:var(--texto-suave);margin-top:1px;text-transform:uppercase;letter-spacing:.3px}
+.tags-row{padding:10px 14px;display:flex;gap:6px;flex-wrap:wrap;background:var(--branco);border-bottom:1px solid var(--borda)}
+.section-block{padding:16px 14px 6px}
+.section-heading{font-family:'Fraunces',serif;font-size:17px;font-weight:700;margin-bottom:10px;color:var(--texto)}
+.ing-list{background:var(--branco);border-radius:var(--radius);overflow:hidden;border:1px solid var(--borda)}
+.ing-item{padding:11px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--borda);cursor:pointer;transition:background .12s}
+.ing-item:last-child{border-bottom:none}
+.ing-item.checked{background:var(--verde-claro)}
+.ing-check{width:20px;height:20px;border:2px solid var(--borda);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .13s}
+.ing-item.checked .ing-check{background:var(--verde);border-color:var(--verde);color:white}
+.ing-text{flex:1}
+.ing-name{font-size:14px;font-weight:500}
+.ing-note{font-size:12px;color:var(--texto-suave)}
+.ing-qty{font-size:13px;color:var(--texto-suave);text-align:right;white-space:nowrap}
+
+/* MODE TABS */
+.mode-tabs{display:flex;background:var(--branco);border-bottom:2px solid var(--borda);overflow-x:auto}
+.mode-tabs::-webkit-scrollbar{display:none}
+.mode-tab{flex:1;min-width:80px;padding:11px 8px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;color:var(--texto-suave);transition:all .13s;font-family:inherit}
+.mode-tab.active{color:var(--verde);border-bottom-color:var(--verde)}
+
+/* STEPS */
+.steps-wrap{padding:10px 14px}
+.step-item{display:flex;gap:12px;margin-bottom:18px}
+.step-num{width:26px;height:26px;background:var(--verde);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.step-content{flex:1}
+.step-text{font-size:14px;line-height:1.6;margin-bottom:7px}
+.timer-btn{display:inline-flex;align-items:center;gap:6px;background:var(--verde-claro);border:1.5px solid var(--verde-mid);border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--verde);cursor:pointer;font-family:inherit;transition:all .13s}
+.timer-btn.running{background:var(--verde);color:white;border-color:var(--verde)}
+.timer-btn.done{background:#e8f5e9;color:#2e7d32;border-color:#81c784}
+
+/* AUDIO FAB */
+.audio-fab{position:fixed;bottom:22px;right:18px;width:54px;height:54px;background:var(--verde);color:white;border:none;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:var(--shadow-lg);display:none;align-items:center;justify-content:center;z-index:300;transition:transform .13s}
+.audio-fab:active{transform:scale(.92)}
+.audio-fab.visible{display:flex}
+
+/* ING SEARCH */
+.ing-search-header{padding:16px 14px 0}
+.ing-input-row{display:flex;gap:8px;margin-bottom:10px}
+.ing-input-row input{flex:1;padding:10px 14px;border:1px solid var(--borda);border-radius:24px;font-size:14px;outline:none;font-family:inherit;background:var(--branco)}
+.ing-input-row input:focus{border-color:var(--verde-mid)}
+.btn-add{padding:10px 18px;background:var(--verde);color:white;border:none;border-radius:24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.ing-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.ing-tag{background:var(--verde);color:white;padding:5px 10px;border-radius:20px;font-size:13px;display:flex;align-items:center;gap:5px}
+.ing-tag button{background:none;border:none;color:white;cursor:pointer;font-size:16px;line-height:1;padding:0;opacity:.8}
+.match-full{background:#e8f5e9;color:#2e7d32}
+.match-partial{background:#fff3e0;color:#c47c00}
+
+/* PLANNER */
+.planner-wrap{padding:16px}
+.plan-card{background:var(--branco);border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid var(--borda)}
+.plan-card-title{font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.plan-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.plan-row:last-child{margin-bottom:0}
+.plan-label{font-size:15px;font-weight:500}
+.chip-group{display:flex;gap:7px;flex-wrap:wrap}
+.gerar-btn{width:100%;padding:15px;background:var(--verde);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .13s}
+.gerar-btn:active{opacity:.85}
+.plan-summary-hero{background:linear-gradient(155deg,var(--hero-inicio),var(--hero-fim));color:white;padding:20px 16px 22px;margin-bottom:12px}
+.plan-summary-hero h3{font-family:'Fraunces',serif;font-size:22px;margin-bottom:10px}
+.plan-stat{display:flex;justify-content:space-between;font-size:13px;opacity:.88;margin-bottom:4px}
+.plan-actions{display:flex;gap:8px;padding:0 16px 12px}
+.btn-outline{flex:1;padding:11px;background:white;color:var(--verde);border:2px solid var(--verde);border-radius:var(--radius);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.plan-recipe-item{background:var(--branco);border-radius:var(--radius);padding:13px 14px;margin-bottom:8px;border:1px solid var(--borda);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.plan-recipe-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.plan-recipe-sub{font-size:12px;color:var(--texto-suave)}
+.shop-list{padding:0 16px 16px}
+.shop-cat-title{font-size:12px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 7px;padding-left:2px}
+.shop-item{background:var(--branco);padding:10px 13px;border-radius:var(--radius-sm);margin-bottom:4px;display:flex;align-items:center;gap:10px;border:1px solid var(--borda);cursor:pointer;transition:opacity .13s}
+.shop-item.checked{opacity:.45}
+.shop-check{width:18px;height:18px;border:2px solid var(--borda);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .13s}
+.shop-item.checked .shop-check{background:var(--verde);border-color:var(--verde);color:white}
+
+/* EMPTY */
+.empty{text-align:center;padding:52px 24px;color:var(--texto-suave);grid-column:1/-1}
+.empty .ico{font-size:44px;margin-bottom:14px}
+.empty h3{font-family:'Fraunces',serif;font-size:19px;margin-bottom:7px;color:var(--texto)}
+.empty p{font-size:13px;line-height:1.6}
+
+/* INLINE ALERT */
+.inline-alert{background:#fff3e0;border:1px solid #ffcc80;border-radius:var(--radius);padding:14px 16px;font-size:13px;color:#7b4a00;margin:16px 16px 0;line-height:1.5}
+
+/* GUIDE */
+.guide-wrap{padding:0 0 32px}
+.guide-hero{background:linear-gradient(155deg,var(--hero-inicio),var(--hero-fim));color:white;padding:28px 20px 32px;text-align:center}
+.guide-hero-icon{font-size:40px;margin-bottom:10px}
+.guide-hero h2{font-family:'Fraunces',serif;font-size:24px;font-weight:900;margin-bottom:8px}
+.guide-hero p{font-size:14px;opacity:.85;max-width:480px;margin:0 auto}
+.guide-section{display:flex;gap:14px;padding:18px 16px 0}
+.guide-section-num{width:28px;height:28px;background:var(--verde);color:white;border-radius:50%;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.guide-section-body{flex:1;padding-bottom:18px;border-bottom:1px solid var(--borda)}
+.guide-section:last-child .guide-section-body{border-bottom:none}
+.guide-section-body h3{font-family:'Fraunces',serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--texto)}
+.guide-section-body p{font-size:14px;line-height:1.65;color:var(--texto);margin-bottom:8px}
+.guide-section-body p:last-child{margin-bottom:0}
+.guide-list{font-size:14px;line-height:1.7;color:var(--texto);padding-left:16px;margin-bottom:8px}
+.guide-list li{margin-bottom:3px}
+.guide-tip{background:var(--verde-claro);border-left:3px solid var(--verde-mid);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:9px 12px;font-size:13px;color:var(--verde-escuro);margin:10px 0;line-height:1.55}
+.guide-fields{display:flex;flex-direction:column;gap:5px;margin:10px 0}
+.guide-field{font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.guide-tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;white-space:nowrap;margin-top:2px;background:var(--verde-claro);color:var(--verde)}
+.guide-section-body code{font-family:monospace;font-size:12px;background:var(--areia);padding:1px 5px;border-radius:4px;border:1px solid var(--borda)}
+
+/* SETTINGS */
+.settings-wrap{padding:20px}
+.settings-group{background:var(--branco);border-radius:var(--radius);padding:16px;margin-bottom:14px;border:1px solid var(--borda)}
+.settings-group h3{font-family:'Fraunces',serif;font-size:15px;margin-bottom:10px}
+.settings-input{width:100%;padding:10px 12px;border:1px solid var(--borda);border-radius:var(--radius-sm);font-size:13px;font-family:monospace;outline:none;background:var(--areia)}
+.settings-input:focus{border-color:var(--verde-mid)}
+.settings-save{margin-top:10px;padding:10px 20px;background:var(--verde);color:white;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.settings-status{font-size:12px;color:var(--verde);margin-top:6px;min-height:16px}
+.nav-settings{background:none;border:none;font-size:18px;cursor:pointer;padding:4px 6px;color:var(--texto-suave);border-radius:6px}
+.nav-settings:hover{background:var(--verde-claro)}
+
+/* SUBSTITUIÇÕES */
+.subst-wrap{padding:14px}
+.subst-search{width:100%;padding:10px 14px;border:1px solid var(--borda);border-radius:24px;font-size:14px;background:var(--branco);outline:none;font-family:inherit;margin-bottom:10px}
+.subst-search:focus{border-color:var(--verde-mid)}
+.subst-filters{display:flex;gap:7px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+.subst-filters::-webkit-scrollbar{display:none}
+.subst-card{background:var(--branco);border-radius:var(--radius);border:1px solid var(--borda);margin-bottom:10px;overflow:hidden}
+.subst-card-header{padding:13px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.subst-card-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700}
+.subst-card-cat{font-size:11px;color:var(--texto-suave);background:var(--areia);padding:2px 8px;border-radius:10px}
+.subst-alt{padding:10px 16px;border-top:1px solid var(--borda);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.subst-alt:last-child{}
+.subst-alt-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.subst-alt-ratio{font-size:12px;color:var(--verde);font-weight:600}
+.subst-alt-note{font-size:12px;color:var(--texto-suave);margin-top:2px}
+.subst-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.subst-tag{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:600}
+.tag-vegano{background:#f3e5f5;color:#7b1fa2}
+.tag-saudavel{background:#e8f5e9;color:#2e7d32}
+.tag-barato{background:#fff3e0;color:#e65100}
+.tag-sem-gluten{background:#e3f2fd;color:#1565c0}
+.tag-sem-lactose{background:#fce4ec;color:#c62828}
+
+/* CALENDAR VIEW */
+.cal-toggle{display:flex;background:var(--areia);border-radius:8px;padding:3px;margin:12px 16px 0;border:1px solid var(--borda)}
+.cal-toggle-btn{flex:1;padding:7px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:none;color:var(--texto-suave);font-family:inherit;transition:all .15s}
+.cal-toggle-btn.active{background:var(--branco);color:var(--verde);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+.cal-wrap{padding:12px 16px}
+.cal-day{background:var(--branco);border-radius:var(--radius);border:1px solid var(--borda);margin-bottom:10px;overflow:hidden}
+.cal-day-header{background:var(--verde-claro);padding:8px 14px;font-size:12px;font-weight:700;color:var(--verde);text-transform:uppercase;letter-spacing:.4px}
+.cal-slot{padding:10px 14px;display:flex;align-items:center;gap:10px;border-top:1px solid var(--borda)}
+.cal-slot:first-of-type{border-top:none}
+.cal-slot-label{font-size:11px;color:var(--texto-suave);font-weight:600;width:46px;flex-shrink:0;text-transform:uppercase}
+.cal-slot-recipe{flex:1;font-size:14px;font-weight:500;cursor:pointer;color:var(--texto)}
+.cal-slot-recipe:hover{color:var(--verde)}
+.cal-slot-empty{flex:1;font-size:13px;color:var(--texto-suave);font-style:italic}
+.cal-swap-btn{background:none;border:1px solid var(--borda);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--texto-suave);font-family:inherit;transition:all .13s}
+.cal-swap-btn:hover{border-color:var(--verde);color:var(--verde)}
+.cal-selected{background:var(--verde-claro) !important;border-left:3px solid var(--verde)}
+/* Swap modal */
+.swap-modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;display:flex;align-items:flex-end;justify-content:center}
+.swap-sheet{background:var(--branco);border-radius:16px 16px 0 0;width:100%;max-width:700px;max-height:75vh;overflow-y:auto;padding:16px}
+.swap-sheet h3{font-family:'Fraunces',serif;font-size:17px;margin-bottom:12px}
+.swap-option{padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;border:1px solid var(--borda);margin-bottom:6px;transition:background .12s}
+.swap-option:hover{background:var(--verde-claro);border-color:var(--verde)}
+.plan-mode-toggle{display:flex;background:var(--areia);border-radius:10px;padding:3px;margin-bottom:14px;border:1px solid var(--borda)}
+.plan-mode-btn{flex:1;padding:8px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:none;color:var(--texto-suave);font-family:inherit;transition:all .15s}
+.plan-mode-btn.active{background:var(--branco);color:var(--verde);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+.ai-loading{text-align:center;padding:32px 16px;color:var(--texto-suave)}
+.ai-loading .spin{font-size:32px;animation:spin 1s linear infinite;display:inline-block;margin-bottom:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <button class="nav-back" id="navBack" onclick="goBack()">←</button>
+  <span class="nav-title" id="navTitle">A Minha Cozinha</span>
+  <button class="nav-settings" onclick="goTo('sSettings')" title="Definições">⚙️</button>
+</nav>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <h1>🌿 A Minha Cozinha</h1>
+    <p>A tua cozinha, ao teu ritmo</p>
+  </div>
+  <div class="home-actions">
+    <button class="home-btn" onclick="goTo('sPlanner')">
+      <div class="home-btn-icon">📅</div>
+      <div class="home-btn-text"><h3>Planeamento Semanal</h3><p>Gera o teu plano e lista de compras</p></div>
+    </button>
+    <button class="home-btn" onclick="goTo('sIngSearch')">
+      <div class="home-btn-icon">🥦</div>
+      <div class="home-btn-text"><h3>O que tenho no frigorífico?</h3><p>Pesquisa receitas pelos ingredientes</p></div>
+    </button>
+    <button class="home-btn" onclick="goTo('sRecipes')">
+      <div class="home-btn-icon">📖</div>
+      <div class="home-btn-text"><h3>Todas as Receitas</h3><p>Navega e filtra o teu livro de receitas</p></div>
+    </button>
+    <button class="home-btn" onclick="goTo('sSubst')">
+      <div class="home-btn-icon">🔄</div>
+      <div class="home-btn-text"><h3>Substituições</h3><p>Alternativas para ingredientes em falta</p></div>
+    </button>
+    <button class="home-btn" onclick="goTo('sGuide')">
+      <div class="home-btn-icon">📘</div>
+      <div class="home-btn-text"><h3>Como usar a Minha Cozinha</h3><p>Guia rápido de todas as funcionalidades</p></div>
+    </button>
+  </div>
+  <div class="home-import" onclick="goTo('sImport')">
+    <span style="font-size:22px">📂</span>
+    <div>
+      <div style="font-size:14px;font-weight:600">Importar Receitas</div>
+      <div class="recipes-count" id="recipesCount">Nenhuma receita carregada</div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT -->
+<div class="screen" id="sImport">
+  <div class="import-wrap">
+    <div class="import-card">
+      <h3>Como importar</h3>
+      <p>Seleciona todos os ficheiros <strong>.txt</strong> das tuas receitas de uma vez. As receitas ficam guardadas no browser e carregam automaticamente da próxima vez.</p>
+    </div>
+    <label class="import-label">
+      📂 Selecionar ficheiros de receitas
+      <input type="file" multiple accept=".txt" style="display:none" onchange="importRecipes(this)">
+    </label>
+    <div id="importStatus" style="text-align:center;font-size:14px;color:var(--texto-suave);margin-bottom:10px"></div>
+    <div id="importedList"></div>
+    <button class="btn-danger" onclick="clearRecipes()">🗑 Limpar todas as receitas</button>
+  </div>
+</div>
+
+<!-- RECIPES LIST -->
+<div class="screen" id="sRecipes">
+  <div class="search-bar">
+    <input type="search" class="search-input" placeholder="🔍 Pesquisar receitas..." oninput="filterRecipes()" id="recipeSearch">
+  </div>
+  <div class="filters-wrap">
+    <div class="filter-row">
+      <span class="filter-label">Categoria</span>
+      <div class="filter-chips">
+        <button class="chip active" onclick="setFilter('all',this)">Todas</button>
+        <button class="chip" onclick="setFilter('Carne',this)">🥩 Carne</button>
+        <button class="chip" onclick="setFilter('Peixe',this)">🐟 Peixe</button>
+        <button class="chip" onclick="setFilter('Vegetariano',this)">🥦 Vegetariano</button>
+        <button class="chip" onclick="setFilter('Sopa',this)">🍲 Sopa</button>
+        <button class="chip" onclick="setFilter('Massa',this)">🍝 Massa</button>
+        <button class="chip" onclick="setFilter('Arroz',this)">🍚 Arroz</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Perfil</span>
+      <div class="filter-chips">
+        <button class="chip" onclick="setFilter('alta-proteina',this)">💪 Proteína</button>
+        <button class="chip" onclick="setFilter('baixo-hidratos',this)">🌿 Low Carb</button>
+        <button class="chip" onclick="setFilter('baixo-gordura',this)">🫀 Low Fat</button>
+        <button class="chip" onclick="setFilter('favoritos',this)">❤️ Favoritos</button>
+        <button class="chip" onclick="setFilter('rapida',this)">⚡ Rápida</button>
+        <button class="chip" onclick="setFilter('media',this)">⏱ Média</button>
+        <button class="chip" onclick="setFilter('demorada',this)">🕐 Demorada</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Modo</span>
+      <div class="filter-chips">
+        <button class="chip" onclick="setFilter('Normal',this)">🍳 Normal</button>
+        <button class="chip" onclick="setFilter('Bimby',this)">⚙️ Bimby</button>
+        <button class="chip" onclick="setFilter('Airfryer',this)">💨 Airfryer</button>
+      </div>
+    </div>
+  </div>
+  <div class="recipes-grid" id="recipesGrid"></div>
+</div>
+
+<!-- RECIPE DETAIL -->
+<div class="screen" id="sDetail"><div id="detailContent"></div></div>
+
+<!-- INGREDIENT SEARCH -->
+<div class="screen" id="sIngSearch">
+  <div class="ing-search-header">
+    <div class="ing-input-row">
+      <input type="text" id="ingInput" placeholder="Ex: peito de frango..." onkeydown="if(event.key==='Enter')addIngredient()">
+      <button class="btn-add" onclick="addIngredient()">Adicionar</button>
+    </div>
+    <div class="ing-tags" id="ingTags"></div>
+  </div>
+  <div class="recipes-grid" id="ingResults">
+    <div class="empty" style="grid-column:1/-1">
+      <div class="ico">🥦</div>
+      <h3>Que ingredientes tens?</h3>
+      <p>Adiciona ingredientes acima e verás as receitas que podes fazer.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PLANNER -->
+<div class="screen" id="sPlanner"><div id="plannerContent"></div></div>
+
+<!-- SETTINGS -->
+<div class="screen" id="sSettings">
+  <div class="settings-wrap">
+    <div class="settings-group">
+      <h3>🔑 Chave API Anthropic</h3>
+      <p style="font-size:13px;color:var(--texto-suave);line-height:1.6;margin-bottom:10px">
+        Necessária para o planeamento inteligente (Sugerido). Obtém a tua chave em <strong>console.anthropic.com</strong> → API Keys. Fica guardada apenas no teu browser.
+      </p>
+      <input type="password" class="settings-input" id="apiKeyInput" placeholder="sk-ant-api03-...">
+      <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+        <button class="settings-save" onclick="saveApiKey()">Guardar</button>
+        <button class="settings-save" style="background:var(--areia);color:var(--texto-suave);border:1px solid var(--borda)" onclick="clearApiKey()">Apagar</button>
+      </div>
+      <div class="settings-status" id="apiKeyStatus"></div>
+    </div>
+    <div class="settings-group">
+      <h3>ℹ️ Sobre esta app</h3>
+      <p style="font-size:13px;color:var(--texto-suave);line-height:1.6">
+        A Minha Cozinha é uma ferramenta pessoal de planeamento culinário. As tuas receitas e preferências ficam guardadas localmente no teu browser e nunca são partilhadas.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSTITUIÇÕES -->
+<div class="screen" id="sSubst">
+  <div class="subst-wrap">
+    <input type="search" class="subst-search" placeholder="🔍 Pesquisar ingrediente..." oninput="filterSubst()" id="substSearch">
+    <div class="subst-filters" id="substFilters">
+      <button class="chip active" onclick="setSubstFilter('all',this)">Todos</button>
+      <button class="chip" onclick="setSubstFilter('vegano',this)">🌱 Vegano</button>
+      <button class="chip" onclick="setSubstFilter('mais-saudavel',this)">💚 Mais saudável</button>
+      <button class="chip" onclick="setSubstFilter('mais-barato',this)">💰 Mais barato</button>
+      <button class="chip" onclick="setSubstFilter('sem-gluten',this)">🌾 Sem glúten</button>
+      <button class="chip" onclick="setSubstFilter('sem-lactose',this)">🥛 Sem lactose</button>
+    </div>
+    <div id="substList"></div>
+  </div>
+</div>
+
+<!-- GUIDE -->
+<div class="screen" id="sGuide">
+  <div class="guide-wrap">
+
+    <div class="guide-hero">
+      <div class="guide-hero-icon">📘</div>
+      <h2>Como usar a Minha Cozinha</h2>
+      <p>Tudo o que precisas de saber para tirar o máximo partido da app</p>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">1</div>
+      <div class="guide-section-body">
+        <h3>Importar receitas</h3>
+        <p>Começa por ir a <strong>Importar Receitas</strong> e selecciona todos os teus ficheiros <code>.txt</code> de uma vez. As receitas ficam guardadas no browser e carregam automaticamente da próxima vez.</p>
+        <div class="guide-tip">💡 Cada receita é um ficheiro <code>.txt</code> separado. Usa o VS Code para os criar e editar — evita caracteres RTF do TextEdit do Mac.</div>
+        <div class="guide-fields">
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code># Título da receita</code></div>
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code>categoria:</code> Carne · Peixe · Vegetariano · Sopa · Massa · Arroz · Salada · Lanche · Sobremesa</div>
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code>porções: 4</code></div>
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code>tempo: 35</code> (em minutos)</div>
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code>dificuldade:</code> Fácil · Médio · Difícil</div>
+          <div class="guide-field"><span class="guide-tag">obrigatório</span><code>modos:</code> Normal · Bimby · Airfryer (separados por vírgula)</div>
+          <div class="guide-field"><span class="guide-tag">opcional</span><code>prep: marinada 30 min antes</code> — aviso de preparação antecipada</div>
+          <div class="guide-field"><span class="guide-tag">opcional</span><code>tipo: frito</code> — marca receitas fritas/panadas (limitadas a 1 por plano)</div>
+          <div class="guide-field"><span class="guide-tag">opcional</span><code>## Nutrição</code> com calorias, proteína, hidratos, gordura por dose</div>
+        </div>
+        <div class="guide-tip">⏱ Para adicionar um temporizador a um passo, coloca <code>⏱ 8</code> (número de minutos) na linha imediatamente a seguir ao passo.</div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">2</div>
+      <div class="guide-section-body">
+        <h3>Todas as Receitas</h3>
+        <p>Navega e filtra o teu livro de receitas. Os filtros estão organizados em três linhas:</p>
+        <ul class="guide-list">
+          <li><strong>Categoria</strong> — Carne, Peixe, Vegetariano, Sopa, Massa, Arroz</li>
+          <li><strong>Perfil</strong> — Alta Proteína (≥25g/dose), Low Carb (≤20g), Low Fat (≤10g), Favoritos, Rápida/Média/Demorada</li>
+          <li><strong>Modo</strong> — Normal, Bimby, Airfryer</li>
+        </ul>
+        <p>Toca em qualquer receita para a abrir. No topo encontras o botão <strong>🤍</strong> para a marcar como favorita.</p>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">3</div>
+      <div class="guide-section-body">
+        <h3>Ver uma receita</h3>
+        <p>Dentro de cada receita podes:</p>
+        <ul class="guide-list">
+          <li>Ajustar as <strong>doses</strong> — as quantidades dos ingredientes actualizam automaticamente</li>
+          <li>Tocar em cada <strong>ingrediente</strong> para o riscar da lista à medida que cozinhas</li>
+          <li>Mudar de <strong>modo de preparação</strong> (Normal / Bimby / Airfryer) pelos separadores</li>
+          <li>Iniciar os <strong>temporizadores</strong> de cada passo — tocas e começa a contagem decrescente; toca de novo para cancelar</li>
+          <li>Usar o botão <strong>🔊</strong> para ouvir os passos em voz alta sequencialmente em Português</li>
+        </ul>
+        <div class="guide-tip">⚠️ Se a receita tiver um aviso de preparação antecipada (ex: marinada), aparece um banner laranja logo no topo.</div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">4</div>
+      <div class="guide-section-body">
+        <h3>O que tenho no frigorífico?</h3>
+        <p>Adiciona ingredientes que tens em casa um a um. A app lista todas as receitas que os incluem, ordenadas por número de ingredientes correspondentes.</p>
+        <ul class="guide-list">
+          <li><strong>2/2 ingredientes</strong> (verde) — tens todos os ingredientes necessários</li>
+          <li><strong>1/2 ingredientes</strong> (laranja) — tens alguns mas faltam outros</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">5</div>
+      <div class="guide-section-body">
+        <h3>Planeamento Semanal</h3>
+        <p>Define quantos dias, pessoas e refeições por dia. Depois escolhe as tuas preferências:</p>
+        <ul class="guide-list">
+          <li><strong>Excluir categorias</strong> — remove categorias que não queres ver no plano</li>
+          <li><strong>Modo de cozinha</strong> — filtra por método (opcional)</li>
+          <li><strong>Dificuldade e Duração</strong> — limita a complexidade e tempo de confecção</li>
+          <li><strong>Variedade</strong> — máx. 2 receitas da mesma categoria, máx. 2 da mesma proteína, máx. 1 frita</li>
+          <li><strong>Poupança</strong> — escolhe receitas que partilham ingredientes para minimizar compras</li>
+        </ul>
+        <div class="guide-tip">🧠 O modo <strong>Sugerido (IA)</strong> usa o Claude para escolher as receitas de forma mais inteligente. Requer uma chave API Anthropic — configura em ⚙️ Definições.</div>
+        <p style="margin-top:10px">O resultado mostra-te as receitas seleccionadas, a lista de compras agrupada por secção do supermercado (Frescos → Talho → Peixaria → Congelados → Laticínios → Mercearia → Bebidas → Temperos) e o calendário semanal.</p>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">6</div>
+      <div class="guide-section-body">
+        <h3>Calendário semanal</h3>
+        <p>Alterna entre <strong>📋 Lista</strong> e <strong>📅 Calendário</strong> para ver o plano. No calendário:</p>
+        <ul class="guide-list">
+          <li>Cada refeição é um evento independente — uma receita de 4 doses para 2 pessoas ocupa 2 slots em dias à tua escolha</li>
+          <li><strong>(sobras)</strong> indica que é a segunda (ou mais) vez que essa receita aparece</li>
+          <li>Toca numa refeição para a <strong>seleccionar</strong> (fica verde), depois toca noutra para as <strong>trocar de dia</strong></li>
+          <li>O botão <strong>↔</strong> substitui a receita daquele slot por outra do teu livro — as outras doses da mesma receita não são afectadas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">7</div>
+      <div class="guide-section-body">
+        <h3>Substituições</h3>
+        <p>Uma lista de alternativas para os ingredientes mais comuns. Filtra por <strong>Vegano</strong>, <strong>Mais saudável</strong>, <strong>Mais barato</strong>, <strong>Sem glúten</strong> ou <strong>Sem lactose</strong>. Cada substituição indica a proporção e uma nota prática.</p>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-section-num">8</div>
+      <div class="guide-section-body">
+        <h3>Definições</h3>
+        <p>Acede pelo ícone <strong>⚙️</strong> no canto superior direito. Cola aqui a tua chave API Anthropic para activar o modo Sugerido no planeamento. A chave fica guardada localmente no teu browser e nunca é partilhada.</p>
+        <div class="guide-tip">🔑 Obtém a tua chave em <strong>console.anthropic.com</strong> → API Keys → Create Key. O custo por plano gerado é inferior a 0,01€.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<button class="audio-fab" id="audioFab" onclick="toggleAudio()">🔊</button>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let recipes = [];
+let activeFilter = 'all';
+let screenHistory = [];
+let currentRecipe = null;
+let currentMode = null;
+let currentPortions = 0;
+let timers = {};
+let audioOn = false;
+let searchIngs = [];
+let checkedIngs = {};
+let checkedShop = {};
+let currentPlan = null;
+let planSettings = {
+  dias: 4, pessoas: 2, almoco: true, jantar: true,
+  excluir: [], modos: [], dificuldade: null, otimizacao: 'variety', duracao: null
+};
+
+// ═══════════════════════════════════════════════
+// RTF STRIPPER + PARSER
+// ═══════════════════════════════════════════════
+function stripRTF(text) {
+  // Not RTF — return as-is
+  if (!text.trim().startsWith('{\\rtf')) return text;
+
+  let r = text;
+
+  // 1. Unicode line/paragraph separators → real newlines (must be first)
+  //    RTF encodes these as \uc0\u8232 or \u8232 (U+2028 LINE SEPARATOR)
+  //    and \u8233 (U+2029 PARAGRAPH SEPARATOR)
+  r = r.replace(/\\uc\d*\s*\\u(8232|8233)\??/g, '\n');
+  r = r.replace(/\\u(8232|8233)\??/g, '\n');
+
+  // 2. All other Unicode chars: \uN or \ucX\uN  (N = decimal codepoint)
+  r = r.replace(/\\uc\d*\s*\\u(-?\d+)\??\s*/g, (_, n) => {
+    const c = parseInt(n); return String.fromCodePoint(c < 0 ? c + 65536 : c);
+  });
+  r = r.replace(/\\u(-?\d+)\??\s*/g, (_, n) => {
+    const c = parseInt(n); return String.fromCodePoint(c < 0 ? c + 65536 : c);
+  });
+
+  // 3. Hex-encoded Windows-1252 chars: \'XX
+  r = r.replace(/\\'([0-9a-fA-F]{2})/g, (_, hex) => {
+    const code = parseInt(hex, 16);
+    if (code === 0xa0) return ' '; // non-breaking space
+    return String.fromCharCode(code);
+  });
+
+  // 4. RTF line break: backslash immediately followed by newline
+  r = r.replace(/\\\n/g, '\n');
+
+  // 5. Paragraph / line control words → newlines
+  r = r.replace(/\\pard?\b[^\n]*/g, '\n');
+  r = r.replace(/\\par\b\s*/g, '\n');
+  r = r.replace(/\\line\b\s*/g, '\n');
+
+  // 6. Skip RTF destinations like {\*\something ...}
+  r = r.replace(/\{\s*\\\*[^}]*\}/g, '');
+
+  // 7. Remove all remaining RTF control words  (\word  or  \word123)
+  r = r.replace(/\\[a-zA-Z]+[-]?\d*\s*/g, '');
+
+  // 8. Remove braces and any leftover backslashes
+  r = r.replace(/[{}\\]/g, '');
+
+  // 9. Non-breaking spaces that survived → regular space
+  r = r.replace(/\u00a0/g, ' ');
+
+  // 10. Collapse runs of spaces (but preserve newlines)
+  r = r.split('\n').map(l => l.replace(/ {2,}/g, ' ').trim()).join('\n');
+
+  return r;
+}
+
+function cleanText(text) {
+  text = text.replace(/^\uFEFF/, '');                    // BOM
+  text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n'); // line endings
+  text = stripRTF(text);
+  return text;
+}
+
+function parseRecipe(text, filename) {
+  text = cleanText(text);
+
+  // Split into lines, trim, filter blanks
+  let rawLines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+  // ── Post-RTF fix: join split title lines ──
+  // RTF colour changes can put "# " on one line and the title on the next.
+  const joined = [];
+  for (let i = 0; i < rawLines.length; i++) {
+    if (/^#\s*$/.test(rawLines[i]) && i + 1 < rawLines.length && !rawLines[i+1].startsWith('#')) {
+      joined.push('# ' + rawLines[i+1]);
+      i++; // skip next
+    } else {
+      joined.push(rawLines[i]);
+    }
+  }
+  const lines = joined;
+
+  const r = {
+    id: filename.replace(/\.txt$/i,'').replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_\u00C0-\u024F-]/g,''),
+    titulo:'', categoria:'', porcoes:4, tempo:0,
+    dificuldade:'Fácil', modos:[], prep:null, tipo:null,
+    ingredientes:[], nutricao:null, preparacao:{}
+  };
+
+  let sec = null, modo = null, steps = [];
+  const saveModo = () => { if (modo && steps.length > 0) r.preparacao[modo] = [...steps]; };
+
+  // Normalise a header line: strip all leading # and spaces
+  const hdrName = line => line.replace(/^#+\s*/, '').trim().toLowerCase();
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // ── Title: one or more # but not a section header ──
+    if (/^#[^#]/.test(line)) {
+      const candidate = line.replace(/^#+\s*/, '').trim();
+      // Reject if it looks like a metadata key
+      if (candidate && !/^(categoria|por[çc]|tempo|dificuldade|modos|prep|tipo)\s*:/i.test(candidate)) {
+        r.titulo = candidate; continue;
+      }
+    }
+
+    // ── Metadata (top-level, not inside sections) ──
+    if (sec === null || sec === 'meta') {
+      if (/^categoria\s*:/i.test(line))        { r.categoria   = line.split(':').slice(1).join(':').trim(); sec='meta'; continue; }
+      if (/^por[çco][õo]es\s*:/i.test(line))   { r.porcoes     = parseInt(line.split(':')[1])||4; continue; }
+      if (/^tempo\s*:/i.test(line))             { r.tempo       = parseInt(line.split(':')[1])||0; continue; }
+      if (/^dificuldade\s*:/i.test(line))       { r.dificuldade = line.split(':').slice(1).join(':').trim(); continue; }
+      if (/^modos\s*:/i.test(line))             { r.modos       = line.split(':').slice(1).join(':').split(',').map(m=>m.trim()).filter(Boolean); continue; }
+      if (/^prep\s*:/i.test(line))              { r.prep        = line.split(':').slice(1).join(':').trim(); continue; }
+      if (/^tipo\s*:/i.test(line))              { r.tipo        = line.split(':').slice(1).join(':').trim().toLowerCase(); continue; }
+    }
+
+    // ── Section headers: accept any number of leading # ──
+    if (/^#{1,4}/.test(line)) {
+      const h = hdrName(line);
+      if (h === 'ingredientes')                 { sec='ing'; continue; }
+      if (/^nutri/i.test(h))                   { sec='nut'; r.nutricao={}; continue; }
+      if (h === 'normal')                       { saveModo(); modo='Normal';   steps=[]; sec='modo'; continue; }
+      if (h === 'bimby')                        { saveModo(); modo='Bimby';    steps=[]; sec='modo'; continue; }
+      if (/^air\s*fryer$/i.test(h))             { saveModo(); modo='Airfryer'; steps=[]; sec='modo'; continue; }
+      if (h === 'airfryer')                     { saveModo(); modo='Airfryer'; steps=[]; sec='modo'; continue; }
+    }
+
+    // ── Ingredients ──
+    if (sec === 'ing' && line.includes('|')) {
+      const parts = line.split('|').map(p=>p.trim());
+      if (parts[1]) r.ingredientes.push({quantidade:parts[0]||'', nome:parts[1], nota:parts[2]||''});
+      continue;
+    }
+
+    // ── Nutrition ──
+    if (sec === 'nut' && r.nutricao !== null) {
+      if (/^calorias\s*:/i.test(line))          { r.nutricao.calorias  = parseFloat(line.split(':')[1])||0; continue; }
+      if (/^prote[íi]na\s*:/i.test(line))       { r.nutricao.proteina  = parseFloat(line.split(':')[1])||0; continue; }
+      if (/^hidratos\s*:/i.test(line))          { r.nutricao.hidratos  = parseFloat(line.split(':')[1])||0; continue; }
+      if (/^gordura\s*:/i.test(line))           { r.nutricao.gordura   = parseFloat(line.split(':')[1])||0; continue; }
+      continue;
+    }
+
+    // ── Steps ──
+    if (sec === 'modo') {
+      // Timer line: ⏱ or ⏲ symbol, optionally alone on a line
+      if (/^[⏱⏲⌛]/.test(line)) {
+        let mins = parseInt(line.replace(/[^0-9]/g,''))||0;
+        // If the number is on the NEXT line (RTF sometimes splits this)
+        if (mins === 0 && i+1 < lines.length && /^\d+$/.test(lines[i+1].trim())) {
+          mins = parseInt(lines[i+1].trim()); i++;
+        }
+        if (steps.length > 0 && mins > 0) steps[steps.length-1].timer = mins;
+        continue;
+      }
+      // A lone number after a timer symbol (RTF split)
+      // Only treat as timer if previous step has no timer yet
+      if (/^\d{1,3}$/.test(line) && steps.length > 0 && steps[steps.length-1].timer === null) {
+        const prev = steps[steps.length-1];
+        // Heuristic: only if the number looks like a plausible cooking time (1–180 min)
+        const n = parseInt(line);
+        if (n >= 1 && n <= 180) { prev.timer = n; continue; }
+      }
+      // Numbered step: "1. text" or "1) text"
+      const sm = line.match(/^(\d+)[.)]\s+(.+)/);
+      if (sm) { steps.push({n:parseInt(sm[1]), texto:sm[2].trim(), timer:null}); continue; }
+      // "1 text" fallback (no punctuation)
+      const sm2 = line.match(/^(\d+)\s+(.{5,})/); // require at least 5 chars to avoid false matches
+      if (sm2 && parseInt(sm2[1]) <= 50) { steps.push({n:parseInt(sm2[1]), texto:sm2[2].trim(), timer:null}); continue; }
+    }
+  }
+
+  saveModo();
+
+  // Infer modos from what was actually parsed if header was missing
+  if (r.modos.length === 0) r.modos = Object.keys(r.preparacao);
+
+  return r;
+}
+
+// ═══════════════════════════════════════════════
+// IMPORT & STORAGE
+// ═══════════════════════════════════════════════
+function importRecipes(input) {
+  const files = [...input.files];
+  if (!files.length) return;
+  document.getElementById('importStatus').textContent = `A processar ${files.length} ficheiro${files.length !== 1 ? 's' : ''}...`;
+
+  let done = 0;
+  const newRecipes = [];
+  const warnings = [];
+
+  files.forEach(f => {
+    const fr = new FileReader();
+    fr.onload = e => {
+      try {
+        const r = parseRecipe(e.target.result, f.name);
+        if (r.titulo) {
+          newRecipes.push(r);
+          // Check for potential issues
+          if (r.ingredientes.length === 0) warnings.push(`${r.titulo}: sem ingredientes`);
+          if (Object.keys(r.preparacao).length === 0) warnings.push(`${r.titulo}: sem passos de preparação`);
+        } else {
+          warnings.push(`${f.name}: título não encontrado`);
+        }
+      } catch(err) {
+        warnings.push(`${f.name}: erro - ${err.message}`);
+      }
+      if (++done === files.length) {
+        recipes = newRecipes;
+        saveStorage();
+        updateCount();
+        showImportResult(newRecipes, warnings);
+      }
+    };
+    fr.onerror = () => {
+      warnings.push(`${f.name}: erro ao ler ficheiro`);
+      if (++done === files.length) { recipes = newRecipes; saveStorage(); updateCount(); showImportResult(newRecipes, warnings); }
+    };
+    fr.readAsText(f, 'UTF-8');
+  });
+}
+
+function showImportResult(loaded, warnings) {
+  const n = loaded.length;
+  document.getElementById('importStatus').textContent =
+    `✅ ${n} receita${n !== 1 ? 's' : ''} importada${n !== 1 ? 's' : ''} com sucesso!`;
+
+  let html = loaded.map(r => {
+    const modos = Object.keys(r.preparacao);
+    const hasWarn = r.ingredientes.length === 0 || modos.length === 0;
+    return `<div class="import-recipe-row">
+      <span><strong>${r.titulo}</strong> <span style="color:var(--texto-suave)">${r.categoria || '?'}</span></span>
+      <span class="${hasWarn ? 'warn' : 'ok'}">
+        ${modos.join(', ') || '⚠️ sem modos'} · ${r.ingredientes.length} ing.
+      </span>
+    </div>`;
+  }).join('');
+
+  if (warnings.length > 0) {
+    html += `<div class="inline-alert" style="margin:12px 0 0">
+      ⚠️ <strong>Avisos:</strong><br>${warnings.map(w => `• ${w}`).join('<br>')}
+    </div>`;
+  }
+
+  document.getElementById('importedList').innerHTML = html;
+}
+
+function saveStorage() {
+  try {
+    localStorage.setItem('mck_v2', JSON.stringify(recipes));
+  } catch(e) {
+    console.warn('localStorage cheio ou indisponível:', e);
+  }
+}
+
+function loadStorage() {
+  try {
+    const d = localStorage.getItem('mck_v2');
+    if (d) { recipes = JSON.parse(d); updateCount(); }
+  } catch(e) { console.warn('Erro ao carregar:', e); }
+}
+
+function clearRecipes() {
+  if (!confirm('Apagar todas as receitas guardadas?')) return;
+  recipes = [];
+  localStorage.removeItem('mck_v2');
+  updateCount();
+  document.getElementById('importStatus').textContent = 'Receitas apagadas.';
+  document.getElementById('importedList').innerHTML = '';
+}
+
+function updateCount() {
+  const n = recipes.length;
+  document.getElementById('recipesCount').textContent =
+    n === 0 ? 'Nenhuma receita carregada' : `${n} receita${n !== 1 ? 's' : ''} carregada${n !== 1 ? 's' : ''}`;
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function curScreen() { return document.querySelector('.screen.active')?.id || 'sHome'; }
+
+function goTo(id, push = true) {
+  if (push) screenHistory.push(curScreen());
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const titles = {
+    sHome: 'A Minha Cozinha', sImport: 'Importar Receitas',
+    sRecipes: 'Receitas', sDetail: '', sIngSearch: 'O que tenho?',
+    sPlanner: 'Planeamento Semanal', sSubst: 'Substituições',
+    sSettings: 'Definições', sGuide: 'Como usar a Minha Cozinha'
+  };
+  document.getElementById('navTitle').textContent = titles[id] || '';
+  document.getElementById('navBack').style.display = id === 'sHome' ? 'none' : 'flex';
+  document.getElementById('audioFab').classList.remove('visible');
+  stopAudio();
+  if (id === 'sRecipes')   renderRecipesList();
+  if (id === 'sPlanner')   renderPlannerForm();
+  if (id === 'sIngSearch') initIngSearch();
+  if (id === 'sSubst')     { substFilter='all'; renderSubst(); }
+  if (id === 'sSettings')  initSettings();
+  window.scrollTo(0, 0);
+}
+
+function goBack() { goTo(screenHistory.pop() || 'sHome', false); }
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+const isAP = r => r.nutricao && r.nutricao.proteina >= 25;
+const isBH = r => r.nutricao && r.nutricao.hidratos <= 20;
+const isLF = r => r.nutricao && r.nutricao.gordura <= 10;
+const isFrito = r => r.tipo === 'frito';
+
+// ── Favourites ──────────────────────────────────────
+let favourites = new Set();
+function loadFavourites() {
+  try { favourites = new Set(JSON.parse(localStorage.getItem('mck_favs') || '[]')); } catch(e) { favourites = new Set(); }
+}
+function saveFavourites() {
+  try { localStorage.setItem('mck_favs', JSON.stringify([...favourites])); } catch(e) {}
+}
+function toggleFav(id) {
+  if (favourites.has(id)) favourites.delete(id); else favourites.add(id);
+  saveFavourites();
+  // Update heart button if visible
+  const btn = document.getElementById('favBtn');
+  if (btn) btn.textContent = favourites.has(id) ? '❤️' : '🤍';
+  // Refresh card if in recipe list
+  if (document.getElementById('sRecipes').classList.contains('active')) filterRecipes();
+}
+const diffClass = d => {
+  const l = (d || '').toLowerCase();
+  if (l.includes('f')) return 'badge-facil';
+  if (l.includes('m')) return 'badge-medio';
+  return 'badge-dificil';
+};
+const mIcon = m => m === 'Bimby' ? '⚙️' : m === 'Airfryer' ? '💨' : '🍳';
+
+function fmtQty(qty, ratio) {
+  if (!qty || qty.toLowerCase().includes('q.b')) return 'q.b.';
+  const mt = qty.match(/^([0-9]+[.,]?[0-9]*)\s*(.*)/);
+  if (!mt) return qty;
+  const n = parseFloat(mt[1].replace(',', '.')) * ratio;
+  const u = mt[2].trim();
+  const fmt = n < 10 ? (Math.round(n * 10) / 10) : Math.round(n);
+  return u ? `${fmt} ${u}` : `${fmt}`;
+}
+
+// ═══════════════════════════════════════════════
+// RECIPE LIST
+// ═══════════════════════════════════════════════
+function renderRecipesList() { filterRecipes(); }
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-chips .chip, .filters-scroll .chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterRecipes();
+}
+
+function filterRecipes() {
+  const q = (document.getElementById('recipeSearch')?.value || '').toLowerCase().trim();
+  const filtered = recipes.filter(r => {
+    if (q && !r.titulo.toLowerCase().includes(q) && !r.categoria.toLowerCase().includes(q)) return false;
+    if (activeFilter === 'all')            return true;
+    if (activeFilter === 'alta-proteina')  return isAP(r);
+    if (activeFilter === 'baixo-hidratos') return isBH(r);
+    if (activeFilter === 'baixo-gordura')  return isLF(r);
+    if (activeFilter === 'favoritos')      return favourites.has(r.id);
+    if (activeFilter === 'rapida')         return r.tempo <= 30;
+    if (activeFilter === 'media')          return r.tempo > 30 && r.tempo <= 45;
+    if (activeFilter === 'demorada')       return r.tempo > 45;
+    if (activeFilter === 'Normal')         return !!r.preparacao['Normal'];
+    if (activeFilter === 'Bimby')          return r.modos.includes('Bimby') || !!r.preparacao['Bimby'];
+    if (activeFilter === 'Airfryer')       return r.modos.includes('Airfryer') || !!r.preparacao['Airfryer'];
+    return r.categoria === activeFilter;
+  });
+  renderCards(filtered, 'recipesGrid', {});
+}
+
+function renderCards(list, containerId, matchInfo) {
+  const g = document.getElementById(containerId); if (!g) return;
+  if (!list.length) {
+    g.innerHTML = `<div class="empty"><div class="ico">🍽️</div><h3>Sem receitas</h3><p>Tenta outro filtro ou importa mais receitas.</p></div>`;
+    return;
+  }
+  g.innerHTML = list.map(r => {
+    const mi = matchInfo[r.id];
+    const modos = Object.keys(r.preparacao);
+    return `<div class="recipe-card" onclick="openRecipe('${r.id}')">
+      <div class="recipe-card-body">
+        ${mi ? `<div style="margin-bottom:6px"><span class="badge ${mi.full ? 'match-full' : 'match-partial'}">${mi.matches}/${mi.total} ingredientes</span></div>` : ''}
+        <div class="recipe-card-title">${r.titulo}</div>
+        <div class="recipe-card-meta">
+          <span class="badge badge-cat">${r.categoria || '—'}</span>
+          <span class="badge ${diffClass(r.dificuldade)}">${r.dificuldade}</span>
+          ${isAP(r) ? '<span class="badge badge-prot">💪 Proteína</span>' : ''}
+          ${isBH(r) ? '<span class="badge badge-carb">🌿 Low carb</span>' : ''}
+          ${isLF(r) ? '<span class="badge badge-fat">🫀 Low fat</span>' : ''}
+          ${isFrito(r) ? '<span class="badge badge-frito">🍟 Frito</span>' : ''}
+        </div>
+        <div class="recipe-card-footer">
+          <span class="recipe-card-time">⏱ ${r.tempo} min · ${r.porcoes} doses</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:16px;cursor:pointer" onclick="event.stopPropagation();toggleFav('${r.id}')">${favourites.has(r.id)?'❤️':'🤍'}</span>
+            <div class="mode-icons">${modos.map(m => `<span title="${m}">${mIcon(m)}</span>`).join('')}</div>
+          </div>
+        </div>
+        ${r.prep ? `<div class="prep-chip">⚠️ ${r.prep}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+// RECIPE DETAIL
+// ═══════════════════════════════════════════════
+function openRecipe(id) {
+  const r = recipes.find(x => x.id === id); if (!r) return;
+  currentRecipe = r;
+  currentPortions = r.porcoes;
+  const modos = Object.keys(r.preparacao);
+  // Prefer Normal as first tab, otherwise first available
+  currentMode = modos.includes('Normal') ? 'Normal' : (modos[0] || 'Normal');
+  checkedIngs = {}; timers = {};
+  renderDetail();
+  goTo('sDetail');
+  document.getElementById('navTitle').textContent = r.titulo;
+  document.getElementById('audioFab').classList.add('visible');
+}
+
+function renderDetail() {
+  const r = currentRecipe;
+  const ratio = currentPortions / r.porcoes;
+  const modos = Object.keys(r.preparacao);
+  let h = '';
+
+  // Hero
+  h += `<div class="recipe-hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <h1 style="flex:1;margin-right:12px">${r.titulo}</h1>
+      <button id="favBtn" onclick="toggleFav('${r.id}')" style="background:none;border:none;font-size:26px;cursor:pointer;flex-shrink:0;padding:0;line-height:1">${favourites.has(r.id)?'❤️':'🤍'}</button>
+    </div>
+    <div class="recipe-hero-meta">
+      <span>⏱ ${r.tempo} min</span>
+      <span class="badge ${diffClass(r.dificuldade)}" style="background:rgba(255,255,255,0.18);color:white;border:none">${r.dificuldade}</span>
+      <span>${r.categoria}</span>
+    </div>
+  </div>`;
+
+  // Prep warning
+  if (r.prep) {
+    h += `<div class="prep-banner">⚠️ <strong>Preparação antecipada:</strong>&nbsp;${r.prep}</div>`;
+  }
+
+  // Portions
+  h += `<div class="portions-row">
+    <span class="portions-label">Doses</span>
+    <div class="portions-stepper">
+      <button class="stepper-btn" onclick="chgPortion(-1)">−</button>
+      <span class="stepper-value" id="portVal">${currentPortions}</span>
+      <button class="stepper-btn" onclick="chgPortion(1)">+</button>
+    </div>
+  </div>`;
+
+  // Nutrition
+  if (r.nutricao) {
+    const n = r.nutricao;
+    h += `<div class="nutrition-bar">
+      <div class="nut-item"><div class="nut-val" id="nCal">${Math.round(n.calorias * ratio)}</div><div class="nut-lbl">kcal</div></div>
+      <div class="nut-item"><div class="nut-val" id="nProt">${Math.round(n.proteina * ratio)}g</div><div class="nut-lbl">Proteína</div></div>
+      <div class="nut-item"><div class="nut-val" id="nHid">${Math.round(n.hidratos * ratio)}g</div><div class="nut-lbl">Hidratos</div></div>
+      <div class="nut-item"><div class="nut-val" id="nGord">${Math.round(n.gordura * ratio)}g</div><div class="nut-lbl">Gordura</div></div>
+    </div>`;
+    const tags = [];
+    if (isAP(r)) tags.push('<span class="badge badge-prot">💪 Alta Proteína</span>');
+    if (isBH(r)) tags.push('<span class="badge badge-carb">🌿 Baixo em Hidratos</span>');
+    if (isLF(r)) tags.push('<span class="badge badge-fat">🫀 Baixo em Gordura</span>');
+    if (isFrito(r)) tags.push('<span class="badge badge-frito">🍟 Frito/Panado</span>');
+    if (tags.length) h += `<div class="tags-row">${tags.join('')}</div>`;
+  }
+
+  // Ingredients
+  h += `<div class="section-block">
+    <div class="section-heading">Ingredientes</div>
+    <div class="ing-list">
+      ${r.ingredientes.map((ing, i) => `
+        <div class="ing-item" id="ii${i}" onclick="togIng(${i})">
+          <div class="ing-check" id="ic${i}"></div>
+          <div class="ing-text">
+            <div class="ing-name">${ing.nome}</div>
+            ${ing.nota ? `<div class="ing-note">${ing.nota}</div>` : ''}
+          </div>
+          <div class="ing-qty" id="iq${i}">${fmtQty(ing.quantidade, ratio)}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  // Mode tabs — always show if more than one mode, always show heading
+  if (modos.length > 1) {
+    h += `<div class="mode-tabs" id="modeTabs">
+      ${modos.map(m => `<div class="mode-tab${m === currentMode ? ' active' : ''}" onclick="switchMode('${m}')">${mIcon(m)} ${m}</div>`).join('')}
+    </div>`;
+  }
+
+  // Steps
+  const steps = r.preparacao[currentMode] || [];
+  h += `<div class="section-block">
+    <div class="section-heading" id="modeTitle">Preparação — ${currentMode}</div>
+    ${steps.length > 0
+      ? `<div class="steps-wrap" id="stepsWrap">${renderSteps(steps)}</div>`
+      : `<div class="inline-alert">Nenhum passo encontrado para este modo. Verifica o ficheiro .txt.</div>`
+    }
+  </div>`;
+
+  document.getElementById('detailContent').innerHTML = h;
+}
+
+function renderSteps(steps) {
+  return (steps || []).map((s, i) => `
+    <div class="step-item">
+      <div class="step-num">${s.n}</div>
+      <div class="step-content">
+        <div class="step-text">${s.texto}</div>
+        ${s.timer ? `<button class="timer-btn" id="tb${i}" onclick="startTimer('tb${i}',${s.timer})">⏱ ${s.timer} min</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function switchMode(m) {
+  currentMode = m; stopAudio(); timers = {};
+  document.querySelectorAll('#modeTabs .mode-tab').forEach(t => t.classList.toggle('active', t.textContent.includes(m)));
+  document.getElementById('modeTitle').textContent = `Preparação — ${m}`;
+  const steps = currentRecipe.preparacao[m] || [];
+  document.getElementById('stepsWrap').innerHTML = steps.length > 0
+    ? renderSteps(steps)
+    : '<div class="inline-alert">Nenhum passo encontrado para este modo.</div>';
+}
+
+function chgPortion(d) {
+  currentPortions = Math.max(1, currentPortions + d);
+  document.getElementById('portVal').textContent = currentPortions;
+  const ratio = currentPortions / currentRecipe.porcoes;
+  currentRecipe.ingredientes.forEach((_, i) => {
+    const el = document.getElementById(`iq${i}`);
+    if (el) el.textContent = fmtQty(currentRecipe.ingredientes[i].quantidade, ratio);
+  });
+  if (currentRecipe.nutricao) {
+    const n = currentRecipe.nutricao;
+    const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+    s('nCal', Math.round(n.calorias * ratio));
+    s('nProt', Math.round(n.proteina * ratio) + 'g');
+    s('nHid', Math.round(n.hidratos * ratio) + 'g');
+    s('nGord', Math.round(n.gordura * ratio) + 'g');
+  }
+}
+
+function togIng(i) {
+  checkedIngs[i] = !checkedIngs[i];
+  document.getElementById(`ii${i}`)?.classList.toggle('checked', checkedIngs[i]);
+  const c = document.getElementById(`ic${i}`); if (c) c.textContent = checkedIngs[i] ? '✓' : '';
+}
+
+// ═══════════════════════════════════════════════
+// TIMERS
+// ═══════════════════════════════════════════════
+function playBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.35, 0.7].forEach(delay => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + delay + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.4);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + 0.4);
+    });
+  } catch(e) { console.warn('Áudio não disponível'); }
+}
+
+function startTimer(id, mins) {
+  const btn = document.getElementById(id); if (!btn) return;
+  if (timers[id]) {
+    clearInterval(timers[id]); delete timers[id];
+    btn.textContent = `⏱ ${mins} min`; btn.className = 'timer-btn'; return;
+  }
+  let secs = mins * 60; btn.className = 'timer-btn running';
+  timers[id] = setInterval(() => {
+    secs--;
+    if (secs <= 0) {
+      clearInterval(timers[id]); delete timers[id];
+      btn.textContent = '✅ Pronto!'; btn.className = 'timer-btn done';
+      playBeep();
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+      return;
+    }
+    btn.textContent = `⏱ ${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════
+function toggleAudio() { audioOn ? stopAudio() : startAudio(); }
+function stopAudio() {
+  audioOn = false; speechSynthesis.cancel();
+  const f = document.getElementById('audioFab'); if (f) f.textContent = '🔊';
+}
+function startAudio() {
+  const steps = currentRecipe?.preparacao[currentMode] || [];
+  if (!steps.length) return;
+  audioOn = true; document.getElementById('audioFab').textContent = '⏹';
+  let i = 0;
+  const next = () => {
+    if (!audioOn || i >= steps.length) { stopAudio(); return; }
+    const u = new SpeechSynthesisUtterance(`Passo ${steps[i].n}. ${steps[i].texto}`);
+    u.lang = 'pt-PT'; u.rate = 0.88;
+    u.onend = () => { i++; setTimeout(next, 700); };
+    speechSynthesis.speak(u);
+  };
+  next();
+}
+
+// ═══════════════════════════════════════════════
+// INGREDIENT SEARCH
+// ═══════════════════════════════════════════════
+function initIngSearch() {
+  searchIngs = [];
+  const t = document.getElementById('ingTags'); if (t) t.innerHTML = '';
+  const r = document.getElementById('ingResults');
+  if (r) r.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ico">🥦</div><h3>Que ingredientes tens?</h3><p>Adiciona ingredientes acima.</p></div>`;
+  const inp = document.getElementById('ingInput'); if (inp) inp.value = '';
+}
+
+function addIngredient() {
+  const el = document.getElementById('ingInput');
+  const v = el.value.trim().toLowerCase();
+  if (!v || searchIngs.includes(v)) { el.value = ''; return; }
+  searchIngs.push(v); el.value = ''; updateIngSearch();
+}
+
+function removeIng(v) { searchIngs = searchIngs.filter(x => x !== v); updateIngSearch(); }
+
+function ingMatch(searchTerm, ingName) {
+  const t = searchTerm.toLowerCase().trim();
+  const n = ingName.toLowerCase().trim();
+  if (n.includes(t) || t.includes(n)) return true;
+  // Word-level match: any word in search term appears in ingredient name
+  const words = t.split(/\s+/).filter(w => w.length > 2);
+  return words.some(w => n.includes(w));
+}
+
+function updateIngSearch() {
+  const tagsEl = document.getElementById('ingTags');
+  tagsEl.innerHTML = searchIngs.map(i =>
+    `<div class="ing-tag">${i}<button onclick="removeIng('${i.replace(/'/g,"\\'")}')">×</button></div>`
+  ).join('');
+
+  if (!searchIngs.length) {
+    document.getElementById('ingResults').innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ico">🥦</div><h3>Que ingredientes tens?</h3><p>Adiciona ingredientes acima.</p></div>`;
+    return;
+  }
+
+  const results = recipes.map(r => {
+    const ingNames = r.ingredientes.map(i => i.nome);
+    const matched = searchIngs.filter(si => ingNames.some(n => ingMatch(si, n)));
+    return { r, matches: matched.length, total: searchIngs.length };
+  }).filter(x => x.matches > 0).sort((a, b) => b.matches - a.matches || a.r.tempo - b.r.tempo);
+
+  if (!results.length) {
+    document.getElementById('ingResults').innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ico">🔍</div><h3>Sem resultados</h3><p>Tenta outros ingredientes.</p></div>`;
+    return;
+  }
+
+  const mi = {};
+  results.forEach(({ r, matches, total }) => { mi[r.id] = { matches, total, full: matches === total }; });
+  renderCards(results.map(x => x.r), 'ingResults', mi);
+}
+
+// ═══════════════════════════════════════════════
+// PLANNER
+// ═══════════════════════════════════════════════
+function renderPlannerForm() {
+  if (currentPlan) { renderPlanResult(); return; }
+  const s = planSettings;
+
+  document.getElementById('plannerContent').innerHTML = `
+  <div class="planner-wrap">
+    <div class="plan-card">
+      <div class="plan-card-title">Refeições</div>
+      <div class="plan-row"><span class="plan-label">Dias</span>
+        <div class="portions-stepper">
+          <button class="stepper-btn" onclick="pSet('dias',-1)">−</button>
+          <span class="stepper-value" id="pDias">${s.dias}</span>
+          <button class="stepper-btn" onclick="pSet('dias',1)">+</button>
+        </div>
+      </div>
+      <div class="plan-row"><span class="plan-label">Pessoas</span>
+        <div class="portions-stepper">
+          <button class="stepper-btn" onclick="pSet('pessoas',-1)">−</button>
+          <span class="stepper-value" id="pPessoas">${s.pessoas}</span>
+          <button class="stepper-btn" onclick="pSet('pessoas',1)">+</button>
+        </div>
+      </div>
+      <div class="plan-row" style="flex-direction:column;align-items:flex-start;gap:9px">
+        <span class="plan-label">Refeições por dia</span>
+        <div class="chip-group">
+          <div class="chip${s.almoco ? ' active' : ''}" id="cAlmoco" onclick="pToggle('almoco')">Almoço</div>
+          <div class="chip${s.jantar ? ' active' : ''}" id="cJantar" onclick="pToggle('jantar')">Jantar</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--texto-suave);margin-top:8px" id="totalRef">${plannerTotalText()}</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-card-title">Preferências</div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Excluir categorias</div>
+        <div class="chip-group">
+          ${['Carne','Peixe','Vegetariano','Sopa','Sobremesa','Lanche','Salada','Massa','Arroz'].map(c =>
+            `<div class="chip${s.excluir.includes(c) ? ' excl-active' : ''}" onclick="pExcluir('${c}',this)">${c}</div>`
+          ).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Modo de cozinha <span style="font-weight:400;color:var(--texto-suave)">(opcional)</span></div>
+        <div class="chip-group">
+          ${['Normal','Bimby','Airfryer'].map(m =>
+            `<div class="chip${s.modos.includes(m) ? ' active' : ''}" onclick="pModo('${m}',this)">${mIcon(m)} ${m}</div>`
+          ).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Dificuldade máxima <span style="font-weight:400;color:var(--texto-suave)">(opcional)</span></div>
+        <div class="chip-group" id="diffChips">
+          ${['Fácil','Médio','Difícil'].map(d =>
+            `<div class="chip${s.dificuldade === d ? ' active' : ''}" onclick="pDiff('${d}',this)">${d}</div>`
+          ).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Duração <span style="font-weight:400;color:var(--texto-suave)">(opcional)</span></div>
+        <div class="chip-group" id="duracaoChips">
+          ${['Rápida','Média','Demorada'].map(d =>
+            `<div class="chip${s.duracao===d?' active':''}" onclick="pDuracao('${d}',this)">${d==='Rápida'?'⚡':d==='Média'?'⏱':'🕐'} ${d}</div>`
+          ).join('')}
+        </div>
+        <div style="font-size:11px;color:var(--texto-suave);margin-top:5px">Rápida ≤30 min · Média 30-45 min · Demorada >45 min</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Otimizar para</div>
+        <div class="chip-group">
+          <div class="chip${s.otimizacao==='variety'?' active':''}" onclick="pOtimizacao('variety',this)">🎨 Variedade</div>
+          <div class="chip${s.otimizacao==='budget'?' active':''}" onclick="pOtimizacao('budget',this)">💰 Poupança</div>
+        </div>
+        <div style="font-size:11px;color:var(--texto-suave);margin-top:6px" id="otimDesc">
+          ${s.otimizacao==='variety'?'Evita repetir categorias e proteínas seguidas':'Prefere receitas com ingredientes em comum'}
+        </div>
+      </div>
+    </div>
+    <div class="plan-mode-toggle" style="margin-top:0">
+      <button class="plan-mode-btn${plannerMode==='rapido'?' active':''}" onclick="setPlannerMode('rapido')">⚡ Rápido</button>
+      <button class="plan-mode-btn${plannerMode==='sugerido'?' active':''}" onclick="setPlannerMode('sugerido')">🧠 Sugerido (IA)</button>
+    </div>
+    <button class="gerar-btn" id="gerarBtn" onclick="plannerMode==='sugerido'?gerarPlanoAI():gerarPlano()">
+      Gerar Plano
+    </button>
+  </div>`;
+}
+
+function plannerTotalText() {
+  const n = calcTotal();
+  const s = planSettings;
+  const mealsPerDay = (s.almoco ? 1 : 0) + (s.jantar ? 1 : 0);
+  const totalMeals = s.dias * mealsPerDay * s.pessoas;
+  return `${n} receita${n !== 1 ? 's' : ''} → ${totalMeals} refeições individuais`;
+}
+function calcTotal() {
+  // Number of RECIPES needed:
+  // Each recipe yields ~4 portions. For N people, one recipe covers (4/N) meal occasions.
+  // Total meal occasions = dias × mealsPerDay
+  // Recipes needed = ceil(total_occasions / occasions_per_recipe)
+  const s = planSettings;
+  const mealsPerDay = (s.almoco ? 1 : 0) + (s.jantar ? 1 : 0);
+  const totalOccasions = s.dias * mealsPerDay;            // e.g. 5 days × 2 = 10
+  const portionsPerRecipe = 4;                            // assumed average
+  const occasionsPerRecipe = portionsPerRecipe / s.pessoas; // e.g. 4÷2=2 per recipe
+  return Math.max(1, Math.ceil(totalOccasions / occasionsPerRecipe));
+}
+function pSet(f, d) {
+  planSettings[f] = Math.max(1, Math.min(f === 'dias' ? 7 : 10, planSettings[f] + d));
+  document.getElementById(f === 'dias' ? 'pDias' : 'pPessoas').textContent = planSettings[f];
+  document.getElementById('totalRef').textContent = plannerTotalText();
+}
+function pToggle(f) {
+  planSettings[f] = !planSettings[f];
+  document.getElementById(f === 'almoco' ? 'cAlmoco' : 'cJantar').classList.toggle('active', planSettings[f]);
+  document.getElementById('totalRef').textContent = plannerTotalText();
+}
+function pExcluir(c, el) {
+  const i = planSettings.excluir.indexOf(c);
+  if (i >= 0) { planSettings.excluir.splice(i, 1); el.classList.remove('excl-active'); }
+  else { planSettings.excluir.push(c); el.classList.add('excl-active'); el.classList.remove('active'); }
+}
+function pModo(m, el) {
+  const i = planSettings.modos.indexOf(m);
+  if (i >= 0) { planSettings.modos.splice(i, 1); el.classList.remove('active'); }
+  else { planSettings.modos.push(m); el.classList.add('active'); }
+}
+function pDiff(d, el) {
+  planSettings.dificuldade = planSettings.dificuldade === d ? null : d;
+  document.querySelectorAll('#diffChips .chip').forEach(c => c.classList.remove('active'));
+  if (planSettings.dificuldade) el.classList.add('active');
+}
+
+function pOtimizacao(v, el) {
+  planSettings.otimizacao = v;
+  document.querySelectorAll('.chip-group .chip').forEach(c => {
+    if (c.textContent.includes('Variedade') || c.textContent.includes('Poupança')) c.classList.remove('active');
+  });
+  el.classList.add('active');
+  const desc = document.getElementById('otimDesc');
+  if (desc) desc.textContent = v === 'variety' ? 'Evita repetir categorias e proteínas seguidas' : 'Prefere receitas com ingredientes em comum';
+}
+
+function setPlannerMode(m) {
+  plannerMode = m;
+  renderPlannerForm(); // re-render to update toggle + button label
+}
+
+// Detect main protein type from recipe
+function mainProtein(r) {
+  const title = r.titulo.toLowerCase();
+  const ings = r.ingredientes.map(i => i.nome.toLowerCase()).join(' ');
+  const text = title + ' ' + ings;
+  if (/frango|peru|pato|galinha|aves/.test(text)) return 'aves';
+  if (/vaca|novilho|bife|carne pic/.test(text))   return 'vaca';
+  if (/porco|entremeada|costeleta|lombo/.test(text)) return 'porco';
+  if (/bacalhau|peixe|atum|salmão|pescada|carapau|pargo|robalo|dourada|sardinha/.test(text)) return 'peixe';
+  if (/camarão|marisco|lula|polvo/.test(text))    return 'marisco';
+  return 'outro';
+}
+
+function pDuracao(d, el) {
+  planSettings.duracao = planSettings.duracao === d ? null : d;
+  document.querySelectorAll('#duracaoChips .chip').forEach(c => c.classList.remove('active'));
+  if (planSettings.duracao) el.classList.add('active');
+}
+
+function gerarPlano() {
+  const s = planSettings;
+  const total = calcTotal();
+  if (!total) return;
+
+  const diffOrd = {'fácil':1,'facil':1,'médio':2,'medio':2,'difícil':3,'dificil':3};
+  const maxD = s.dificuldade ? (diffOrd[s.dificuldade.toLowerCase()]||3) : 3;
+
+  let pool = recipes.filter(r => {
+    if (r.porcoes >= 10) return false;
+    if (s.excluir.includes(r.categoria)) return false;
+    if (s.modos.length > 0 && !s.modos.some(m => Object.keys(r.preparacao).includes(m))) return false;
+    if ((diffOrd[r.dificuldade?.toLowerCase()]||1) > maxD) return false;
+    if (s.duracao === 'Rápida'  && r.tempo > 30) return false;
+    if (s.duracao === 'Média'   && (r.tempo <= 30 || r.tempo > 45)) return false;
+    if (s.duracao === 'Demorada' && r.tempo <= 45) return false;
+    return true;
+  });
+
+  if (!pool.length) {
+    document.getElementById('plannerContent').innerHTML = `<div class="inline-alert" style="margin:16px">⚠️ Sem receitas com estes filtros. <button onclick="currentPlan=null;renderPlannerForm()" style="color:var(--verde);background:none;border:none;cursor:pointer;font-weight:600">← Voltar</button></div>`;
+    return;
+  }
+
+  pool = pool.sort(() => Math.random() - 0.5);
+  let selected = [];
+
+  if (s.otimizacao === 'variety') {
+    // Strict variety: max 2 per category, max 2 per protein, max 1 frito
+    const catCount = {}, protCount = {};
+    let fritoCount = 0;
+    const remaining = [...pool];
+
+    const canAdd = r => {
+      const cat = r.categoria;
+      const prot = mainProtein(r);
+      if ((catCount[cat] || 0) >= 2) return false;
+      if ((protCount[prot] || 0) >= 2) return false;
+      if (isFrito(r) && fritoCount >= 1) return false;
+      return true;
+    };
+
+    // Try to build a valid selection
+    for (let attempt = 0; attempt < 3 && selected.length < total; attempt++) {
+      selected = []; Object.keys(catCount).forEach(k => delete catCount[k]);
+      Object.keys(protCount).forEach(k => delete protCount[k]); fritoCount = 0;
+      const rem = [...pool].sort(() => Math.random() - 0.5);
+      let lastCat = null;
+
+      while (selected.length < total && rem.length > 0) {
+        // Prefer different category from last, and within limits
+        let idx = rem.findIndex(r => r.categoria !== lastCat && canAdd(r));
+        if (idx < 0) idx = rem.findIndex(r => canAdd(r));
+        if (idx < 0) idx = 0; // fallback: take next regardless
+        const pick = rem[idx];
+        selected.push(pick);
+        catCount[pick.categoria] = (catCount[pick.categoria] || 0) + 1;
+        protCount[mainProtein(pick)] = (protCount[mainProtein(pick)] || 0) + 1;
+        if (isFrito(pick)) fritoCount++;
+        lastCat = pick.categoria;
+        rem.splice(idx, 1);
+      }
+    }
+    // Fill if pool too small
+    while (selected.length < total) selected.push(pool[selected.length % pool.length]);
+
+  } else {
+    // Budget: prefer recipes sharing ingredients, still cap frito at 1
+    const selectedIngs = new Set();
+    let fritoCount = 0;
+    const remaining = [...pool];
+
+    while (selected.length < total && remaining.length > 0) {
+      let bestIdx = -1, bestScore = -1;
+      remaining.forEach((r, i) => {
+        if (isFrito(r) && fritoCount >= 1) return;
+        const shared = r.ingredientes.filter(ing => selectedIngs.has(ing.nome.toLowerCase())).length;
+        if (shared > bestScore) { bestScore = shared; bestIdx = i; }
+      });
+      if (bestIdx < 0) bestIdx = 0; // fallback
+      const pick = remaining[bestIdx];
+      selected.push(pick);
+      pick.ingredientes.forEach(ing => selectedIngs.add(ing.nome.toLowerCase()));
+      if (isFrito(pick)) fritoCount++;
+      remaining.splice(bestIdx, 1);
+    }
+  }
+
+  currentPlan = { recipes: selected, settings: {...s}, mode: 'rapido' };
+  renderPlanResult();
+}
+
+// ─── Shopping list quantity helpers ──────────────────
+// Normalise an ingredient name for matching across recipes
+function normIngName(nome) {
+  return nome.toLowerCase()
+    .replace(/\s*\(.*?\)\s*/g, '')   // strip notes in brackets
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Common aliases so "folha louro" and "louro" merge, etc.
+const ING_ALIASES = {
+  'folha louro':              'louro',
+  'folha de louro':           'louro',
+  'folhas de louro':          'louro',
+  'limão (sumo)':             'limão',
+  'limão (sumo e raspas)':    'limão',
+  'azeite virgem':            'azeite virgem extra',
+  'azeite':                   'azeite virgem extra',
+  'caldo de galinha (cubo)':  'caldo de galinha',
+  'cubo de caldo de galinha': 'caldo de galinha',
+};
+
+function resolveAlias(nome) {
+  const low = nome.toLowerCase().trim();
+  return ING_ALIASES[low] || normIngName(nome);
+}
+
+function parseQtyStr(qty) {
+  if (!qty || /q\.b/i.test(qty)) return { num: null, unit: 'q.b.' };
+  // Handle "q.b." written as just letters
+  const m = qty.match(/^([0-9]+[.,]?[0-9]*)\s*(.*)/);
+  if (!m) return { num: null, unit: qty.trim() };
+  return {
+    num: parseFloat(m[1].replace(',', '.')),
+    unit: m[2].trim().toLowerCase()
+  };
+}
+
+function fmtNum(n) {
+  if (n === Math.floor(n)) return String(Math.floor(n));
+  if (n < 10)  return String(Math.round(n * 10) / 10);
+  return String(Math.round(n));
+}
+
+function buildShoppingList(recipes) {
+  // key → { displayName, byUnit: {unit: total}, qb: bool }
+  const map = {};
+
+  recipes.forEach(r => {
+    r.ingredientes.forEach(ing => {
+      if (!ing.nome) return;
+      const key = resolveAlias(ing.nome);
+      if (!map[key]) map[key] = { displayName: ing.nome, byUnit: {}, qb: false };
+
+      const { num, unit } = parseQtyStr(ing.quantidade);
+      if (unit === 'q.b.') {
+        map[key].qb = true;
+      } else if (num !== null) {
+        map[key].byUnit[unit] = (map[key].byUnit[unit] || 0) + num;
+      }
+      // If no parseable quantity, we still want the item to appear
+    });
+  });
+
+  return Object.values(map);
+}
+
+function fmtShopQty(item) {
+  const parts = Object.entries(item.byUnit).map(([unit, total]) =>
+    unit ? `${fmtNum(total)} ${unit}` : fmtNum(total)
+  );
+  if (item.qb) parts.push('q.b.');
+  return parts.join(' + ');
+}
+// ─────────────────────────────────────────────────────
+
+let planView = 'list'; // 'list' | 'calendar'
+
+// ── Calendar: independent serving tokens ─────────────────────
+// Each recipe generates floor(porcoes/pessoas) independent serving tokens.
+// Tokens are stored in plan.slots as a flat array mapped to day×meal slots.
+// This allows e.g. recipe cooked Monday lunch → eaten Wednesday dinner.
+
+function initPlanSlots(plan) {
+  const s = plan.settings;
+  const mealsPerDay = (s.almoco ? 1 : 0) + (s.jantar ? 1 : 0);
+  const totalSlots = s.dias * mealsPerDay;
+
+  // Build serving tokens from recipes
+  const tokens = [];
+  plan.recipes.forEach(r => {
+    const servings = Math.max(1, Math.floor(r.porcoes / s.pessoas));
+    for (let i = 0; i < servings; i++) {
+      tokens.push({ recipeId: r.id, servingNum: i + 1, totalServings: servings });
+    }
+  });
+
+  // Assign tokens to slots (fill sequentially, leave null if more slots than tokens)
+  const slots = [];
+  for (let i = 0; i < totalSlots; i++) {
+    const dayIdx = Math.floor(i / mealsPerDay);
+    const mealIdx = i % mealsPerDay;
+    const mealType = mealIdx === 0 && s.almoco ? 'Almoço' : 'Jantar';
+    slots.push({ dayIdx, mealType, token: tokens[i] || null });
+  }
+
+  plan.slots = slots;
+}
+
+function getSlotToken(plan, slotIdx) {
+  return plan.slots?.[slotIdx]?.token || null;
+}
+
+function buildCalendarSlots(plan) {
+  if (!plan.slots) initPlanSlots(plan);
+  const s = plan.settings;
+  const mealsPerDay = (s.almoco ? 1 : 0) + (s.jantar ? 1 : 0);
+  const dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+  const days = [];
+  for (let d = 0; d < s.dias; d++) {
+    const day = { label: dias[d] || `Dia ${d+1}`, slots: [] };
+    for (let m = 0; m < mealsPerDay; m++) {
+      const slotIdx = d * mealsPerDay + m;
+      const mealType = m === 0 && s.almoco ? 'Almoço' : 'Jantar';
+      const token = plan.slots[slotIdx]?.token || null;
+      const recipe = token ? recipes.find(r => r.id === token.recipeId) || null : null;
+      day.slots.push({ slotIdx, mealType, token, recipe });
+    }
+    days.push(day);
+  }
+  return days;
+}
+
+// Tap-to-move state
+let calMoveSource = null;
+
+function tapCalSlot(slotIdx) {
+  if (!currentPlan.slots) initPlanSlots(currentPlan);
+  const token = currentPlan.slots[slotIdx]?.token;
+  if (!token) return;
+
+  if (calMoveSource === null) {
+    calMoveSource = slotIdx;
+    document.querySelectorAll('.cal-slot').forEach(el => el.classList.remove('cal-selected'));
+    document.getElementById(`cs_${slotIdx}`)?.classList.add('cal-selected');
+  } else if (calMoveSource === slotIdx) {
+    calMoveSource = null;
+    document.querySelectorAll('.cal-slot').forEach(el => el.classList.remove('cal-selected'));
+  } else {
+    // Swap tokens between slots
+    const src = currentPlan.slots[calMoveSource];
+    const dst = currentPlan.slots[slotIdx];
+    if (src && dst) {
+      [src.token, dst.token] = [dst.token, src.token];
+    }
+    calMoveSource = null;
+    renderPlanResult();
+    setTimeout(() => setPlanView('calendar'), 30);
+  }
+}
+
+function renderCalendar(days) {
+  // Build a map of recipeId → first slot it appears (for sobras detection)
+  const firstSeen = {};
+  if (currentPlan.slots) {
+    currentPlan.slots.forEach((slot, idx) => {
+      if (slot.token && !(slot.token.recipeId in firstSeen)) {
+        firstSeen[slot.token.recipeId] = idx;
+      }
+    });
+  }
+
+  return days.map(day => `
+    <div class="cal-day">
+      <div class="cal-day-header">${day.label}</div>
+      ${day.slots.map(slot => {
+        const isSelected = calMoveSource === slot.slotIdx;
+        const isSobras = slot.token && firstSeen[slot.token.recipeId] !== slot.slotIdx;
+        return `<div class="cal-slot${isSelected?' cal-selected':''}" id="cs_${slot.slotIdx}">
+          <span class="cal-slot-label">${slot.mealType}</span>
+          ${slot.recipe
+            ? `<span class="cal-slot-recipe" onclick="tapCalSlot(${slot.slotIdx})" title="Toca para mover">
+                 ${slot.recipe.titulo}
+                 ${isSobras ? '<span style="font-size:11px;color:var(--texto-suave);font-style:italic"> (sobras)</span>' : ''}
+               </span>
+               <button class="cal-swap-btn" onclick="event.stopPropagation();openSwap(${slot.slotIdx})">↔</button>`
+            : `<span class="cal-slot-empty">—</span>`}
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function openSwap(slotIdx) {
+  calMoveSource = null;
+  document.querySelectorAll('.cal-slot').forEach(el => el.classList.remove('cal-selected'));
+  if (!currentPlan.slots) initPlanSlots(currentPlan);
+  const token = currentPlan.slots[slotIdx]?.token;
+  const current = token ? recipes.find(r => r.id === token.recipeId) : null;
+  const options = recipes.filter(r =>
+    r.id !== current?.id &&
+    !currentPlan.settings.excluir.includes(r.categoria) &&
+    r.porcoes < 10
+  ).sort((a,b) => a.titulo.localeCompare(b.titulo));
+
+  const modal = document.createElement('div');
+  modal.className = 'swap-modal';
+  modal.id = 'swapModal';
+  modal.innerHTML = `
+    <div class="swap-sheet">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3>Trocar receita</h3>
+        <button onclick="document.getElementById('swapModal').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--texto-suave)">×</button>
+      </div>
+      <div style="font-size:13px;color:var(--texto-suave);margin-bottom:10px">Substituir: <strong>${current?.titulo || '—'}</strong></div>
+      <div style="font-size:12px;color:var(--aviso);background:var(--aviso-fundo);border-radius:var(--radius-sm);padding:8px 10px;margin-bottom:12px">⚠️ As outras doses desta receita não serão afectadas.</div>
+      ${options.map(r => `
+        <div class="swap-option" onclick="doSwap(${slotIdx},'${r.id}')">
+          <div style="font-weight:600">${r.titulo}</div>
+          <div style="font-size:12px;color:var(--texto-suave)">${r.categoria} · ⏱ ${r.tempo} min${isFrito(r)?' · 🍟':''}</div>
+        </div>`).join('')}
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function doSwap(slotIdx, newId) {
+  if (!currentPlan.slots) initPlanSlots(currentPlan);
+  const newRecipe = recipes.find(r => r.id === newId);
+  if (!newRecipe || !currentPlan.slots[slotIdx]) return;
+  const s = currentPlan.settings;
+  const newServings = Math.max(1, Math.floor(newRecipe.porcoes / s.pessoas));
+  // Replace the token in this slot
+  currentPlan.slots[slotIdx].token = { recipeId: newId, servingNum: 1, totalServings: newServings };
+  // Also update plan.recipes to keep list view in sync
+  currentPlan.recipes = [...new Set(
+    currentPlan.slots.filter(sl => sl.token).map(sl => recipes.find(r => r.id === sl.token.recipeId)).filter(Boolean)
+  )];
+  document.getElementById('swapModal')?.remove();
+  renderPlanResult();
+  setTimeout(() => setPlanView('calendar'), 30);
+}
+
+function setPlanView(v) {
+  planView = v;
+  calMoveSource = null;
+  document.querySelectorAll('.cal-toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.view === v));
+  const lv = document.getElementById('listView');
+  const cv = document.getElementById('calView');
+  if (lv) lv.style.display = v === 'list' ? 'block' : 'none';
+  if (cv) cv.style.display = v === 'calendar' ? 'block' : 'none';
+}
+
+function renderPlanResult() {
+  const plan = currentPlan;
+  if (!plan.slots) initPlanSlots(plan);
+  const shopItems = buildShoppingList(plan.recipes);
+  const cats = catIngredientes(shopItems);
+  const calDays = buildCalendarSlots(plan);
+  checkedShop = {};
+
+  document.getElementById('plannerContent').innerHTML = `
+  <div class="plan-summary-hero">
+    <h3>O teu plano está pronto! 🎉</h3>
+    <div class="plan-stat"><span>Refeições</span><span>${plan.recipes.length}</span></div>
+    <div class="plan-stat"><span>Pessoas</span><span>${plan.settings.pessoas}</span></div>
+  </div>
+  <div class="plan-actions">
+    <button class="btn-outline" onclick="currentPlan=null;renderPlannerForm()">↩ Definições</button>
+    <button class="btn-outline" onclick="${plan.mode==='sugerido'?'gerarPlanoAI()':'gerarPlano()'}">🔄 Regenerar</button>
+    <button class="btn-outline" onclick="exportPlan()" style="background:var(--verde);color:white;border-color:var(--verde)">↗ Exportar</button>
+    <button class="btn-outline" onclick="exportPlanJSON()" style="background:#6366f1;color:white;border-color:#6366f1">📤 Exportar JSON</button>
+  </div>
+
+  <div class="cal-toggle">
+    <button class="cal-toggle-btn${planView==='list'?' active':''}" data-view="list" onclick="setPlanView('list')">📋 Lista</button>
+    <button class="cal-toggle-btn${planView==='calendar'?' active':''}" data-view="calendar" onclick="setPlanView('calendar')">📅 Calendário</button>
+  </div>
+
+  <div id="listView" style="display:${planView==='list'?'block':'none'}">
+    <div style="padding:12px 16px 0">
+      <div class="section-heading" style="margin-bottom:10px">Receitas</div>
+      ${plan.recipes.map(r => `
+        <div class="plan-recipe-item" onclick="openRecipe('${r.id}')">
+          <div>
+            <div class="plan-recipe-name">${r.titulo}</div>
+            <div class="plan-recipe-sub">⏱ ${r.tempo} min · ${r.categoria}${isFrito(r)?' · 🍟':''}${isAP(r)?' · 💪':''}</div>
+          </div>
+          <span style="color:var(--verde);font-size:20px">›</span>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <div id="calView" style="display:${planView==='calendar'?'block':'none'}">
+    <div style="font-size:11px;color:var(--texto-suave);padding:8px 16px 0;text-align:center">Toca numa refeição para mover · ↔ para trocar a receita</div>
+    <div class="cal-wrap">${renderCalendar(calDays)}</div>
+  </div>
+
+  <div class="shop-list">
+    <div class="section-heading" style="margin-bottom:2px;margin-top:16px">Lista de Compras</div>
+    ${Object.entries(cats).map(([cat, items]) => `
+      <div class="shop-cat-title">${cat}</div>
+      ${items.map((item, i) => {
+        const id = `${cat.replace(/[^a-z]/gi,'')}${i}`;
+        const qty = fmtShopQty(item);
+        return `<div class="shop-item" id="si${id}" onclick="togShop('${id}')">
+          <div class="shop-check" id="sc${id}"></div>
+          <div style="flex:1;display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <span>${item.displayName}</span>
+            ${qty ? `<span style="color:var(--texto-suave);font-size:12px;white-space:nowrap">${qty}</span>` : ''}
+          </div>
+        </div>`;
+      }).join('')}`).join('')}
+  </div>`;
+}
+
+function togShop(id) {
+  checkedShop[id] = !checkedShop[id];
+  document.getElementById(`si${id}`)?.classList.toggle('checked', checkedShop[id]);
+  const c = document.getElementById(`sc${id}`); if (c) c.textContent = checkedShop[id] ? '✓' : '';
+}
+
+function exportPlan() {
+  const plan = currentPlan;
+  if (!plan) return;
+  if (!plan.slots) initPlanSlots(plan);
+
+  const shopItems = buildShoppingList(plan.recipes);
+  const cats = catIngredientes(shopItems);
+  const calDays = buildCalendarSlots(plan);
+  const dias = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+
+  // Build meal list rows
+  const mealRows = plan.recipes.map(r =>
+    `<tr>
+      <td>${r.titulo}</td>
+      <td>${r.categoria}</td>
+      <td>${r.tempo} min</td>
+      <td>${r.porcoes} doses</td>
+    </tr>`
+  ).join('');
+
+  // Build calendar rows
+  const firstSeen = {};
+  plan.slots.forEach((slot, idx) => {
+    if (slot.token && !(slot.token.recipeId in firstSeen)) firstSeen[slot.token.recipeId] = idx;
+  });
+  const s = plan.settings;
+  const mealsPerDay = (s.almoco ? 1 : 0) + (s.jantar ? 1 : 0);
+  const calRows = calDays.map(day => {
+    const slots = day.slots.map(slot => {
+      const recipe = slot.recipe;
+      const isSobras = slot.token && firstSeen[slot.token.recipeId] !== slot.slotIdx;
+      const label = recipe ? `${recipe.titulo}${isSobras ? ' <em style="color:#888;font-size:11px">(sobras)</em>' : ''}` : '—';
+      return `<tr><td class="day-cell">${slot.mealType}</td><td>${label}</td></tr>`;
+    }).join('');
+    return `<tr class="day-header"><td colspan="2">${day.label}</td></tr>${slots}`;
+  }).join('');
+
+  // Build shopping list
+  const shopHTML = Object.entries(cats).map(([cat, items]) => {
+    const rows = items.map((item, i) => {
+      const qty = fmtShopQty(item);
+      const id = `exp${cat.replace(/[^a-z]/gi,'')}${i}`;
+      return `<div class="shop-item" onclick="this.classList.toggle('checked')">
+        <div class="shop-check"></div>
+        <div class="shop-label">
+          <span>${item.displayName}</span>
+          ${qty ? `<span class="qty">${qty}</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="cat-title">${cat}</div>${rows}`;
+  }).join('');
+
+  const dateStr = new Date().toLocaleDateString('pt-PT', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  const html = `<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano Semanal — A Minha Cozinha</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f3ee; color: #1a1a1a; padding: 24px 16px 48px; max-width: 680px; margin: 0 auto; }
+  .hero { background: linear-gradient(155deg,#0a7a94,#00cccc); color: white; border-radius: 14px; padding: 22px 20px; margin-bottom: 24px; }
+  .hero h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .hero .date { font-size: 13px; opacity: .75; margin-bottom: 12px; }
+  .hero-stats { display: flex; gap: 20px; }
+  .hero-stat { font-size: 13px; }
+  .hero-stat strong { display: block; font-size: 20px; }
+  h2 { font-size: 16px; font-weight: 700; color: #0a7a94; text-transform: uppercase; letter-spacing: .5px; margin: 28px 0 12px; }
+  /* Calendar */
+  .cal-table { width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.08); }
+  .day-header td { background: #e6f7fb; color: #0a7a94; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 7px 12px; }
+  .day-cell { color: #888; font-size: 12px; font-weight: 600; text-transform: uppercase; width: 70px; }
+  .cal-table td { padding: 9px 12px; border-top: 1px solid #ece9e1; background: white; font-size: 14px; vertical-align: middle; }
+  .cal-table tr:first-child td { border-top: none; }
+  /* Recipe list */
+  .recipe-table { width: 100%; border-collapse: collapse; box-shadow: 0 1px 6px rgba(0,0,0,.08); border-radius: 10px; overflow: hidden; }
+  .recipe-table th { background: #e6f7fb; color: #0a7a94; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 8px 12px; text-align: left; }
+  .recipe-table td { padding: 10px 12px; border-top: 1px solid #ece9e1; background: white; font-size: 14px; }
+  /* Shopping list */
+  .cat-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .5px; margin: 16px 0 6px; padding-left: 2px; }
+  .shop-item { display: flex; align-items: center; gap: 10px; background: white; border: 1px solid #ece9e1; border-radius: 8px; padding: 10px 13px; margin-bottom: 5px; cursor: pointer; transition: opacity .15s; }
+  .shop-item.checked { opacity: .4; }
+  .shop-item.checked .shop-check { background: #0d98ba; border-color: #0d98ba; color: white; }
+  .shop-item.checked .shop-label span:first-child { text-decoration: line-through; }
+  .shop-check { width: 20px; height: 20px; border: 2px solid #ccc; border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; transition: all .15s; }
+  .shop-label { flex: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; }
+  .qty { color: #888; font-size: 12px; white-space: nowrap; }
+  .print-hint { text-align: center; font-size: 12px; color: #aaa; margin-top: 32px; }
+  @media print {
+    body { background: white; padding: 12px; }
+    .hero { background: #0a7a94 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="date">${dateStr}</div>
+  <h1>🌿 Plano Semanal</h1>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>${plan.recipes.length}</strong>Refeições</div>
+    <div class="hero-stat"><strong>${plan.settings.pessoas}</strong>Pessoas</div>
+    <div class="hero-stat"><strong>${plan.settings.dias}</strong>Dias</div>
+  </div>
+</div>
+
+<h2>📅 Calendário</h2>
+<table class="cal-table">
+  <tbody>${calRows}</tbody>
+</table>
+
+<h2>📋 Receitas</h2>
+<table class="recipe-table">
+  <thead><tr><th>Receita</th><th>Categoria</th><th>Tempo</th><th>Doses</th></tr></thead>
+  <tbody>${mealRows}</tbody>
+</table>
+
+<h2>🛒 Lista de Compras</h2>
+${shopHTML}
+
+<p class="print-hint">Toca nos itens para os riscar · Ctrl+P ou ⌘+P para imprimir</p>
+
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+
+function catIngredientes(items) {
+  // Categories ordered as per Continente supermarket layout
+  const kw = {
+    '🥬 Frescos':           ['cenoura','cebola','alho','tomate','pimento','curgete','espinafre','couve','brócolos','cogumelo','limão','laranja','lima','salsa','coentros','tomilho','alecrim','gengibre','louro','alho-frances','alho-francês','abacate','manga','beterraba','pepino','feijão verde','batata','batata-doce','alface','rúcula','espargo','aipo','nabo','abóbora','abobrinha','beringela','agrião'],
+    '🥩 Talho':             ['frango','carne','pato','peru','bife','filete','alheira','chouriço','linguiça','vitela','borrego','cordeiro','coelho','entremeada','costeleta','lombo','hambúrguer','bacon','presunto'],
+    '🐟 Peixaria':          ['peixe','atum','salmão','bacalhau','camarão','pargo','robalo','dourada','sardinha','pescada','lula','polvo','amêijoa','berbigão','mexilhão','marisco','choco','carapau','linguado','ruivo','corvina'],
+    '❄️ Congelados':        ['congelad'],
+    '🧀 Laticínios e Ovos': ['queijo','natas','manteiga','leite','iogurte','mozzarella','creme de leite','requeijão','ricotta','ovo','ovos'],
+    '🛒 Mercearia':         ['arroz','massa','macarrão','penne','esparguete','tagliatelle','fusilli','rigatoni','lasanha','farinha','açúcar','azeite','óleo','vinagre','molho','caldo','tomate pelado','feijão','grão','pão','lentilha','mostarda','maionese','mel','pão ralado','conserva','spray'],
+    '🍷 Bebidas':           ['vinho','cerveja','água','sumo','bebida','leite de coco'],
+    '🧂 Temperos':          ['sal','pimenta','pimentão','orégão','noz-moscada','curcuma','cominhos','canela','açafrão','paprika','caril','ervas','alho em pó','cebola em pó','piri-piri','piripiri','tabasco','massa de pimentão','colorau']
+  };
+  const catOrder = ['🥬 Frescos','🥩 Talho','🐟 Peixaria','❄️ Congelados','🧀 Laticínios e Ovos','🛒 Mercearia','🍷 Bebidas','🧂 Temperos','📦 Outros'];
+  const cats = Object.fromEntries(catOrder.map(k => [k, []]));
+  items.forEach(item => {
+    const n = (item.displayName || item.nome || '').toLowerCase();
+    let placed = false;
+    for (const [cat, keys] of Object.entries(kw)) {
+      if (keys.some(k => n.includes(k))) { cats[cat].push(item); placed = true; break; }
+    }
+    if (!placed) cats['📦 Outros'].push(item);
+  });
+  return Object.fromEntries(Object.entries(cats).filter(([, v]) => v.length > 0));
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT TO JSON (for LifeSync import)
+// ═══════════════════════════════════════════════
+function exportPlanJSON() {
+  const plan = currentPlan;
+  if (!plan) return;
+  if (!plan.slots) initPlanSlots(plan);
+
+  // Ask for the plan start date (Monday of the week)
+  const todayISO = new Date().toISOString().split('T')[0];
+  const startDateStr = prompt(
+    'Data de início do plano (Segunda-feira):\nFormato: AAAA-MM-DD',
+    todayISO
+  );
+  if (!startDateStr) return;
+  const startDate = new Date(startDateStr + 'T12:00:00');
+  if (isNaN(startDate.getTime())) {
+    alert('Data inválida. Use o formato AAAA-MM-DD (ex: 2026-05-26)');
+    return;
+  }
+
+  const calDays = buildCalendarSlots(plan);
+  const entries = [];
+
+  calDays.forEach((day, dayIdx) => {
+    // Compute actual calendar date for this day
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + dayIdx);
+    const dateStr = date.toISOString().split('T')[0];
+
+    day.slots.forEach(slot => {
+      const recipe = slot.recipe;
+      if (!recipe || !recipe.nutricao) return; // skip empty slots and recipes without nutrition
+
+      const n = recipe.nutricao;
+      entries.push({
+        date:     dateStr,
+        mealType: slot.mealType,   // "Almoço" or "Jantar"
+        name:     recipe.titulo,
+        calories: Math.round(n.calorias  || 0),
+        protein:  Math.round(n.proteina  || 0),
+        carbs:    Math.round(n.hidratos  || 0),
+        fats:     Math.round(n.gordura   || 0),
+        fiber:    Math.round(n.fibra     || 0), // included if present
+        portionNote: `1 dose de ${recipe.porcoes} (${plan.settings.pessoas} pessoa${plan.settings.pessoas > 1 ? 's' : ''})`
+      });
+    });
+  });
+
+  if (entries.length === 0) {
+    alert('Não foram encontradas refeições com informação nutricional para exportar.\nCertifica-te de que as receitas têm a secção ## Nutrição preenchida.');
+    return;
+  }
+
+  const output = {
+    exportedAt:  new Date().toISOString(),
+    source:      'A Minha Cozinha',
+    planStartDate: startDateStr,
+    entries
+  };
+
+  const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `plano_refeicoes_${startDateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════
+// SETTINGS — API KEY
+// ═══════════════════════════════════════════════
+function getApiKey() { try { return localStorage.getItem('mck_apikey') || ''; } catch(e) { return ''; } }
+function saveApiKey() {
+  const k = document.getElementById('apiKeyInput').value.trim();
+  // Reject empty or masked values (contains non-ASCII like bullet •)
+  if (!k || !/^[\x20-\x7E]+$/.test(k)) {
+    document.getElementById('apiKeyStatus').textContent = '⚠️ Cola uma chave válida (começa com sk-ant-...).';
+    return;
+  }
+  if (!k.startsWith('sk-')) {
+    document.getElementById('apiKeyStatus').textContent = '⚠️ A chave deve começar com sk-ant-...';
+    return;
+  }
+  try { localStorage.setItem('mck_apikey', k); } catch(e) {}
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiKeyInput').placeholder = 'Chave guardada — cola nova para substituir';
+  document.getElementById('apiKeyStatus').textContent = '✅ Chave guardada! (termina em …' + k.slice(-4) + ')';
+}
+function clearApiKey() {
+  try { localStorage.removeItem('mck_apikey'); } catch(e) {}
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiKeyInput').placeholder = 'sk-ant-api03-...';
+  document.getElementById('apiKeyStatus').textContent = 'Chave apagada.';
+}
+function initSettings() {
+  const k = getApiKey();
+  // NEVER put the real key or a masked version into the editable input
+  document.getElementById('apiKeyInput').value = '';
+  if (k) {
+    document.getElementById('apiKeyInput').placeholder = 'Chave guardada — cola nova para substituir';
+    document.getElementById('apiKeyStatus').textContent = '✅ Chave configurada (termina em …' + k.slice(-4) + ')';
+  } else {
+    document.getElementById('apiKeyInput').placeholder = 'sk-ant-api03-...';
+    document.getElementById('apiKeyStatus').textContent = '';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SUBSTITUIÇÕES DATA
+// ═══════════════════════════════════════════════
+const SUBST = [
+  { nome:'Peito de frango', cat:'Proteínas', alts:[
+    { nome:'Peito de peru', racio:'1:1', nota:'Menos gordura, sabor semelhante', tags:['mais-saudavel'] },
+    { nome:'Coxas de frango desossadas', racio:'1:1', nota:'Mais suculento, mais sabor', tags:['mais-barato'] },
+    { nome:'Tofu firme', racio:'1:1', nota:'Marinar 30 min antes', tags:['sem-lactose','vegano'] }
+  ]},
+  { nome:'Carne picada', cat:'Proteínas', alts:[
+    { nome:'Lentilhas cozidas', racio:'1:1', nota:'Ideal para bolonhesa e chili', tags:['mais-barato','vegano','sem-lactose'] },
+    { nome:'Carne picada de peru', racio:'1:1', nota:'Menos gordura, bom para hambúrgueres', tags:['mais-saudavel'] },
+    { nome:'Soja texturizada', racio:'1:1 hidratada', nota:'Hidratar 15 min em água quente', tags:['mais-barato','vegano'] }
+  ]},
+  { nome:'Coxas de frango', cat:'Proteínas', alts:[
+    { nome:'Pernas de frango', racio:'1:1', nota:'Corte semelhante, com osso', tags:['mais-barato'] },
+    { nome:'Peito de frango', racio:'1:1', nota:'Menos gordo, cuidado para não secar', tags:['mais-saudavel'] },
+    { nome:'Pernil de peru', racio:'1:1', nota:'Mais carne por peça', tags:[] }
+  ]},
+  { nome:'Bacalhau', cat:'Proteínas', alts:[
+    { nome:'Pescada', racio:'1:1', nota:'Sabor mais suave, não precisa demolhar', tags:['mais-barato'] },
+    { nome:'Paloco', racio:'1:1', nota:'Textura semelhante, mais acessível', tags:['mais-barato'] },
+    { nome:'Grão-de-bico', racio:'250g por 400g bacalhau', nota:'Para versão vegetariana do bacalhau à Brás', tags:['vegano','sem-lactose','mais-barato'] }
+  ]},
+  { nome:'Camarões', cat:'Proteínas', alts:[
+    { nome:'Delícias do mar', racio:'1:1', nota:'Para saladas e massas rápidas', tags:['mais-barato'] },
+    { nome:'Miolo de camarão', racio:'1:1', nota:'Já descascado, mais prático', tags:[] },
+    { nome:'Cogumelos king oyster', racio:'1:1', nota:'Cortar em discos, textura semelhante', tags:['vegano','sem-lactose'] }
+  ]},
+  { nome:'Salmão', cat:'Proteínas', alts:[
+    { nome:'Truta', racio:'1:1', nota:'Sabor e textura semelhantes', tags:['mais-barato'] },
+    { nome:'Dourada', racio:'1:1', nota:'Mais suave, ideal para forno', tags:['mais-barato'] },
+    { nome:'Atum fresco', racio:'1:1', nota:'Mais firme, bom para grelhar', tags:[] }
+  ]},
+  { nome:'Natas', cat:'Laticínios', alts:[
+    { nome:'Leite de coco', racio:'1:1', nota:'Ideal para molhos e caril', tags:['sem-lactose','vegano'] },
+    { nome:'Iogurte grego', racio:'1:1', nota:'Adicionar no final para não coalhar', tags:['mais-saudavel'] },
+    { nome:'Leite evaporado', racio:'1:1', nota:'Boa consistência para sopas', tags:['mais-barato'] }
+  ]},
+  { nome:'Manteiga', cat:'Laticínios', alts:[
+    { nome:'Azeite', racio:'3/4 da quantidade', nota:'Para refogados e massas salgadas', tags:['mais-saudavel','sem-lactose','vegano'] },
+    { nome:'Óleo de coco', racio:'1:1', nota:'Bom para bolos e sobremesas', tags:['sem-lactose','vegano'] },
+    { nome:'Margarina vegetal', racio:'1:1', nota:'Verificar se é sem lactose', tags:['mais-barato'] }
+  ]},
+  { nome:'Queijo creme', cat:'Laticínios', alts:[
+    { nome:'Requeijão', racio:'1:1', nota:'Mais leve, ideal para cheesecakes', tags:['mais-barato'] },
+    { nome:'Ricotta batida', racio:'1:1', nota:'Bater no processador até cremosa', tags:[] },
+    { nome:'Tofu sedoso batido', racio:'1:1', nota:'Com limão e sal para sabor', tags:['sem-lactose','vegano'] }
+  ]},
+  { nome:'Ovos', cat:'Laticínios', alts:[
+    { nome:'Banana esmagada', racio:'1 banana = 1 ovo', nota:'Para bolos e panquecas', tags:['vegano','sem-lactose'] },
+    { nome:'Linhaça moída + água', racio:'1 cs + 3 cs água', nota:'Deixar repousar 5 min até gelificar', tags:['vegano','sem-lactose'] },
+    { nome:'Aquafaba', racio:'3 cs = 1 ovo', nota:'Líquido do grão-de-bico, bom para merengues', tags:['mais-barato','vegano','sem-lactose'] }
+  ]},
+  { nome:'Leite', cat:'Laticínios', alts:[
+    { nome:'Bebida de aveia', racio:'1:1', nota:'Sabor neutro, ideal para bolos', tags:['sem-lactose','vegano'] },
+    { nome:'Bebida de amêndoa', racio:'1:1', nota:'Mais leve, bom para panquecas', tags:['sem-lactose','vegano'] },
+    { nome:'Leite sem lactose', racio:'1:1', nota:'Substituto direto sem alterar sabor', tags:['sem-lactose'] }
+  ]},
+  { nome:'Batata', cat:'Frescos', alts:[
+    { nome:'Batata-doce', racio:'1:1', nota:'Mais doce, boa para assar e puré', tags:['mais-saudavel'] },
+    { nome:'Nabo', racio:'1:1', nota:'Menos hidratos, bom para purés', tags:['mais-saudavel'] },
+    { nome:'Couve-flor', racio:'1:1', nota:'Para puré low-carb, cozer e triturar', tags:['mais-saudavel','sem-gluten'] }
+  ]},
+  { nome:'Cebola', cat:'Frescos', alts:[
+    { nome:'Chalotas', racio:'2 chalotas = 1 cebola', nota:'Sabor mais suave e doce', tags:[] },
+    { nome:'Alho-francês', racio:'1 alho-francês = 1 cebola', nota:'Usar a parte branca e verde-claro', tags:[] },
+    { nome:'Cebolinho', racio:'2 cs', nota:'Apenas como acabamento, não para refogar', tags:[] }
+  ]},
+  { nome:'Cogumelos', cat:'Frescos', alts:[
+    { nome:'Beringela em cubos', racio:'1:1', nota:'Textura carnuda semelhante', tags:['vegano'] },
+    { nome:'Curgete em cubos', racio:'1:1', nota:'Mais suave, menos umami', tags:['vegano'] },
+    { nome:'Tofu cortado em cubos', racio:'1:1', nota:'Marinar para mais sabor', tags:['sem-lactose','vegano'] }
+  ]},
+  { nome:'Espinafres', cat:'Frescos', alts:[
+    { nome:'Couve portuguesa', racio:'1:1', nota:'Mais fibrosa, cozinhar mais tempo', tags:['mais-barato'] },
+    { nome:'Acelgas', racio:'1:1', nota:'Textura semelhante quando cozida', tags:[] },
+    { nome:'Agrião', racio:'1:1', nota:'Sabor mais picante, bom em sopas', tags:['mais-saudavel'] }
+  ]},
+  { nome:'Tomate pelado', cat:'Frescos', alts:[
+    { nome:'Tomate fresco maduro', racio:'1:1', nota:'Escaldar, pelar e cortar. Melhor no verão.', tags:['mais-saudavel'] },
+    { nome:'Polpa de tomate', racio:'1:1', nota:'Já triturado, textura diferente', tags:[] },
+    { nome:'Passata de tomate', racio:'1:1', nota:'Mais líquido, ajustar tempo de cozedura', tags:[] }
+  ]},
+  { nome:'Arroz agulha', cat:'Mercearia', alts:[
+    { nome:'Arroz integral', racio:'1:1', nota:'Mais tempo de cozedura (+15 min)', tags:['mais-saudavel'] },
+    { nome:'Quinoa', racio:'1:1', nota:'Mais proteína, sem glúten', tags:['mais-saudavel','sem-gluten'] },
+    { nome:'Cuscuz', racio:'1:1', nota:'Pronto em 5 min, mais rápido', tags:['mais-barato'] }
+  ]},
+  { nome:'Farinha de trigo', cat:'Mercearia', alts:[
+    { nome:'Farinha de arroz', racio:'1:1', nota:'Textura mais leve, boa para panados', tags:['sem-gluten'] },
+    { nome:'Farinha de amêndoa', racio:'1:1', nota:'Mais húmida, reduzir líquidos na receita', tags:['mais-saudavel','sem-gluten'] },
+    { nome:'Farinha de aveia', racio:'1:1', nota:'Triturar flocos de aveia', tags:['mais-saudavel'] }
+  ]},
+  { nome:'Pão ralado', cat:'Mercearia', alts:[
+    { nome:'Flocos de aveia triturados', racio:'1:1', nota:'Mais crocante, ideal para panados', tags:['mais-saudavel'] },
+    { nome:'Farinha de amêndoa', racio:'1:1', nota:'Para panados low-carb', tags:['mais-saudavel','sem-gluten'] },
+    { nome:'Pão seco triturado', racio:'1:1', nota:'Usar pão duro de véspera', tags:['mais-barato'] }
+  ]},
+  { nome:'Azeite', cat:'Mercearia', alts:[
+    { nome:'Óleo de girassol', racio:'1:1', nota:'Para frituras, sabor mais neutro', tags:['mais-barato'] },
+    { nome:'Óleo de coco', racio:'1:1', nota:'Bom para salteados a alta temperatura', tags:['vegano'] },
+    { nome:'Manteiga', racio:'3/4 da quantidade', nota:'Para refogados e acabamentos', tags:[] }
+  ]},
+  { nome:'Molho de soja', cat:'Mercearia', alts:[
+    { nome:'Tamari', racio:'1:1', nota:'Sem glúten, sabor semelhante', tags:['sem-gluten'] },
+    { nome:'Molho Worcestershire', racio:'1:1', nota:'Sabor umami diferente mas funcional', tags:[] },
+    { nome:'Sal + vinagre balsâmico', racio:'1/2 cc sal + 1 cs vinagre', nota:'Para replicar o salgado e umami', tags:['mais-barato','vegano'] }
+  ]},
+  { nome:'Vinho branco', cat:'Bebidas', alts:[
+    { nome:'Caldo de galinha', racio:'1:1', nota:'Sem álcool, bom para risottos e molhos', tags:['mais-barato'] },
+    { nome:'Sumo de limão + água', racio:'1 cs limão + resto água', nota:'Para acidez semelhante', tags:['mais-barato','vegano'] },
+    { nome:'Vinagre branco + água', racio:'1 cs vinagre + resto água', nota:'Acidez mais forte, usar menos', tags:['mais-barato','vegano'] }
+  ]},
+  { nome:'Vinho tinto', cat:'Bebidas', alts:[
+    { nome:'Caldo de carne', racio:'1:1', nota:'Sem álcool, bom para estufados', tags:['mais-barato'] },
+    { nome:'Sumo de uva tinto', racio:'1:1', nota:'Doce, reduzir açúcar na receita', tags:['mais-barato'] },
+    { nome:'Vinagre balsâmico + água', racio:'1 cs vinagre + resto água', nota:'Para cor e acidez semelhantes', tags:['mais-barato','vegano'] }
+  ]},
+  { nome:'Mostarda', cat:'Mercearia', alts:[
+    { nome:'Rábano ralado', racio:'1:1', nota:'Mais picante, usar menos', tags:['sem-gluten','vegano'] },
+    { nome:'Sementes de mostarda', racio:'1 cc = 1 cs mostarda', nota:'Moer ou usar inteiras em marinadas', tags:['sem-gluten','vegano'] }
+  ]},
+  { nome:'Massa (esparguete/penne)', cat:'Mercearia', alts:[
+    { nome:'Massa integral', racio:'1:1', nota:'Mais fibra, cozinhar +2 min', tags:['mais-saudavel'] },
+    { nome:'Massa de leguminosas', racio:'1:1', nota:'De grão ou lentilha, mais proteína', tags:['mais-saudavel','sem-gluten'] },
+    { nome:'Esparguete de curgete', racio:'2 curgetes = 100g massa', nota:'Usar espiralizador', tags:['mais-saudavel','sem-gluten','vegano'] }
+  ]}
+];
+
+let substFilter = 'all';
+
+function setSubstFilter(f, btn) {
+  substFilter = f;
+  document.querySelectorAll('#substFilters .chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderSubst();
+}
+
+function filterSubst() { renderSubst(); }
+
+function renderSubst() {
+  const q = (document.getElementById('substSearch')?.value || '').toLowerCase().trim();
+  const tagMap = { 'vegano':'tag-vegano','mais-saudavel':'tag-saudavel','mais-barato':'tag-barato','sem-gluten':'tag-sem-gluten','sem-lactose':'tag-sem-lactose' };
+  const tagLabel = { 'vegano':'Vegano','mais-saudavel':'Mais saudável','mais-barato':'Mais barato','sem-gluten':'Sem glúten','sem-lactose':'Sem lactose' };
+
+  const filtered = SUBST.filter(s => {
+    if (q && !s.nome.toLowerCase().includes(q)) return false;
+    if (substFilter !== 'all' && !s.alts.some(a => a.tags.includes(substFilter))) return false;
+    return true;
+  });
+
+  const el = document.getElementById('substList');
+  if (!filtered.length) { el.innerHTML = '<div class="empty"><div class="ico">🔍</div><h3>Sem resultados</h3><p>Tenta outro ingrediente.</p></div>'; return; }
+
+  el.innerHTML = filtered.map(s => `
+    <div class="subst-card">
+      <div class="subst-card-header">
+        <span class="subst-card-title">${s.nome}</span>
+        <span class="subst-card-cat">${s.cat}</span>
+      </div>
+      ${s.alts.filter(a => substFilter === 'all' || a.tags.includes(substFilter)).map(a => `
+        <div class="subst-alt">
+          <div style="flex:1">
+            <div class="subst-alt-name">${a.nome}</div>
+            <div class="subst-alt-note">${a.nota}</div>
+            <div class="subst-tags">
+              ${a.tags.map(t => `<span class="subst-tag ${tagMap[t]||''}">${tagLabel[t]||t}</span>`).join('')}
+            </div>
+          </div>
+          <div class="subst-alt-ratio">${a.racio}</div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+// AI PLANNER
+// ═══════════════════════════════════════════════
+let plannerMode = 'rapido'; // 'rapido' | 'sugerido'
+
+async function gerarPlanoAI() {
+  const s = planSettings;
+  const total = calcTotal();
+  const apiKey = getApiKey();
+
+  if (!apiKey) {
+    document.getElementById('plannerContent').innerHTML = `
+      <div class="inline-alert" style="margin:16px">
+        🔑 <strong>Chave API necessária.</strong><br><br>
+        Para usar o planeamento inteligente, vai a <strong>⚙️ Definições</strong> e cola a tua chave Anthropic.<br><br>
+        <button class="gerar-btn" style="margin-top:12px" onclick="goTo('sSettings')">⚙️ Ir para Definições</button>
+        <button class="btn-outline" style="margin-top:8px;width:100%" onclick="plannerMode='rapido';renderPlannerForm()">← Usar planeamento rápido</button>
+      </div>`;
+    return;
+  }
+
+  // Show loading state
+  document.getElementById('plannerContent').innerHTML = `
+    <div class="ai-loading">
+      <div class="spin">🧠</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:6px">A pensar no teu plano...</div>
+      <div style="font-size:13px;color:var(--texto-suave)">O Claude está a analisar as tuas receitas</div>
+    </div>`;
+
+  const diffOrd = {'fácil':1,'facil':1,'médio':2,'medio':2,'difícil':3,'dificil':3};
+  const maxD = s.dificuldade ? (diffOrd[s.dificuldade.toLowerCase()]||3) : 3;
+
+  const pool = recipes.filter(r => {
+    if (r.porcoes >= 10) return false;
+    if (s.excluir.includes(r.categoria)) return false;
+    if (s.modos.length > 0 && !s.modos.some(m => Object.keys(r.preparacao).includes(m))) return false;
+    if ((diffOrd[r.dificuldade?.toLowerCase()]||1) > maxD) return false;
+    if (s.duracao === 'Rápida'   && r.tempo > 30) return false;
+    if (s.duracao === 'Média'    && (r.tempo <= 30 || r.tempo > 45)) return false;
+    if (s.duracao === 'Demorada' && r.tempo <= 45) return false;
+    return true;
+  });
+
+  if (pool.length === 0) {
+    document.getElementById('plannerContent').innerHTML = `<div class="inline-alert" style="margin:16px">Sem receitas com estes filtros. <button onclick="currentPlan=null;plannerMode='rapido';renderPlannerForm()" style="color:var(--verde);background:none;border:none;cursor:pointer;text-decoration:underline">Voltar</button></div>`;
+    return;
+  }
+
+  const otimizacao = s.otimizacao === 'budget'
+    ? 'Prefere receitas que partilham ingredientes para minimizar compras.'
+    : 'Garante variedade: evita repetir a mesma categoria ou proteína seguida.';
+
+  const recipeList = pool.map(r =>
+    `${r.id} | ${r.titulo} | ${r.categoria} | ${mainProtein(r)} | ${isFrito(r)?'FRITO':'normal'} | ${r.ingredientes.slice(0,4).map(i=>i.nome).join(', ')}`
+  ).join('\n');
+
+  const prompt = `Seleciona exatamente ${total} receitas para um plano semanal português equilibrado.
+
+OBJETIVO: ${s.otimizacao === 'budget'
+  ? 'Minimizar compras: escolhe receitas que partilham o máximo de ingredientes entre si.'
+  : 'Maximizar variedade: distribui proteínas, categorias e métodos de confeção de forma equilibrada.'}
+
+FILTROS DO UTILIZADOR:
+- Categorias excluídas: ${s.excluir.join(', ') || 'nenhuma'}
+- Modo de cozinha: ${s.modos.join(', ') || 'qualquer'}
+- Dificuldade máxima: ${s.dificuldade || 'qualquer'}
+
+REGRAS OBRIGATÓRIAS (não podem ser violadas):
+1. Seleciona EXATAMENTE ${total} IDs únicos
+2. Usa APENAS IDs da lista abaixo
+3. Máximo 2 receitas da mesma categoria
+4. Máximo 2 receitas com a mesma proteína principal (aves/vaca/porco/peixe/marisco)
+5. Máximo 1 receita marcada como FRITO
+6. ${s.otimizacao === 'variety'
+  ? 'Não coloques a mesma categoria em posições consecutivas'
+  : 'Prefere combinações com mais ingredientes em comum'}
+
+Receitas disponíveis (id | título | categoria | proteína | tipo | ingredientes principais):
+${recipeList}
+
+Responde APENAS com um array JSON de IDs, sem texto adicional.
+Exemplo: ["id1","id2","id3"]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `Erro ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    const match = text.match(/\[.*\]/s);
+    if (!match) throw new Error('Resposta inválida da API');
+
+    const ids = JSON.parse(match[0]);
+    const selected = ids.map(id => pool.find(r => r.id === id)).filter(Boolean);
+
+    if (selected.length === 0) throw new Error('Nenhuma receita reconhecida na resposta');
+
+    currentPlan = { recipes: selected, settings: { ...s }, mode: 'sugerido' };
+    renderPlanResult();
+
+  } catch(err) {
+    document.getElementById('plannerContent').innerHTML = `
+      <div class="inline-alert" style="margin:16px">
+        ❌ <strong>Erro ao contactar a API:</strong> ${err.message}<br><br>
+        Verifica se a chave API está correcta em ⚙️ Definições.<br><br>
+        <button class="gerar-btn" style="margin-top:12px" onclick="plannerMode='rapido';gerarPlano()">⚡ Usar planeamento rápido</button>
+      </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+loadStorage();
+loadFavourites();
+</script>
+<!-- PWA Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registado:', reg.scope))
+      .catch(err => console.log('SW erro:', err));
+  });
+}
+</script>
+</body>
+</html>
