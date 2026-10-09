@@ -1,0 +1,29 @@
+# Chili com Carne
+categoria: Carne
+porções: 6
+tempo: 40
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+30 g    | azeite virgem extra
+150 g   | cebola | cortada em pedaços
+1 dente | alho fresco
+1 pitada| cominhos
+250 g   | pimento vermelho | cortado em pedaços
+1 un    | malagueta vermelha | sem sementes
+450 g   | carne picada de vaca
+300 g   | tomate | em pedaços
+1 cc    | sal fino
+q.b.    | molho de chili | opcional
+400 g   | feijão encarnado | cozido e escorrido
+15 g    | coentros frescos | só as folhas
+
+## Nutrição
+calorias: 327
+proteína: 18
+hidratos: 17
+gordura: 21
+
+## Bimby
+1. [Preencher com os passos do Cookidoo]

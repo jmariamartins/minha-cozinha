@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Bife \'e0 Caf\'e9\
+categoria: Carne\
+por\'e7\'f5es: 2\
+tempo: 20\
+dificuldade: F\'e1cil\
+modos: Normal\
+\
+## Ingredientes\
+350 g | bife de vaca\
+40 g | manteiga\
+3 dente | alho fresco\
+100 ml | natas\
+1 cc | mostarda\
+50 ml | vinho branco seco\
+1 cc | caf\'e9 sol\'favel\
+1 cc | sal fino\
+1 pitada | pimenta preta\
+1 punhado | salsa fresca\
+\
+## Nutri\'e7\'e3o\
+calorias: 721\
+prote\'edna: 47\
+hidratos: 3\
+gordura: 55\
+\
+## Normal\
+1. Tempere os bifes com sal e pimenta dos dois lados. Aque\'e7a uma frigideira anti-aderente ou de ferro em lume muito alto at\'e9 estar bem quente.\
+2. Coloque metade da manteiga na frigideira quente. Sele os bifes 2-3 minutos de cada lado para mal passado, ou 4 minutos para bem passado. Retire e reserve em prato aquecido.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf0 \uc0\u9201 
+\f0  6\
+3. Reduza para lume m\'e9dio. Na mesma frigideira, derreta o restante da manteiga e aloure os dentes de alho fatiados at\'e9 ficarem dourados e perfumados, cerca de 2 minutos.\
+
+\f1 \uc0\u9201 
+\f0  2\
+4. Junte o vinho branco e deixe evaporar o \'e1lcool. Adicione o caf\'e9 sol\'favel dissolvido numa colher de sopa de \'e1gua quente e a mostarda. Mexa bem.\
+
+\f1 \uc0\u9201 
+\f0  2\
+5. Adicione as natas e deixe o molho engrossar em lume m\'e9dio durante 2-3 minutos, mexendo sempre.\
+
+\f1 \uc0\u9201 
+\f0  3\
+6. Volte a colocar os bifes no molho durante 1 minuto para aquecer. Sirva imediatamente polvilhado com salsa picada.\
+
+\f1 \uc0\u9201 
+\f0  1}

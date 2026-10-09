@@ -1,0 +1,39 @@
+# Batatas a Murro
+categoria: Vegetariano
+porções: 4
+tempo: 35
+dificuldade: Fácil
+modos: Normal, Airfryer
+
+## Ingredientes
+600 g   | batata pequena | tipo baby
+2 cs    | azeite virgem extra
+3 dente | alho fresco | esmagados
+q.b.    | sal grosso
+q.b.    | orégãos secos
+q.b.    | salsa fresca | picada
+
+## Nutrição
+calorias: 182
+proteína: 3
+hidratos: 26
+gordura: 8
+
+## Normal
+1. Coza as batatas com pele em água com sal durante 15 minutos até ficarem macias mas não a desfazer. Escorra bem. As batatas devem estar cozidas mas firmes.
+⏱ 15
+2. Pré-aqueça o forno a 220°C.
+3. Com a palma da mão ou o fundo de um copo, esmague cada batata ligeiramente — o suficiente para abrir sem partir. Queremos pedaços irregulares.
+4. Coloque as batatas num tabuleiro forrado com papel vegetal. Regue com azeite, espalhe o alho esmagado por cima e tempere com sal grosso e orégãos.
+5. Asse a 220°C durante 25-30 minutos, virando a meio, até ficarem bem douradas e crocantes nos bordos. As partes irregulares e finas ficam extra crocantes.
+⏱ 28
+6. Retire, salpique com salsa fresca e sirva imediatamente.
+
+## Airfryer
+1. Coza as batatas com pele em água com sal durante 15 minutos até ficarem macias mas não a desfazer. Escorra bem.
+⏱ 15
+2. Com a palma da mão ou o fundo de um copo, esmague cada batata ligeiramente.
+3. Regue com azeite, espalhe o alho esmagado e tempere com sal grosso e orégãos.
+4. Coloque na air fryer a 200°C durante 18-20 minutos, agitando a meio, até ficarem douradas e crocantes.
+⏱ 20
+5. Retire, salpique com salsa fresca e sirva imediatamente.
