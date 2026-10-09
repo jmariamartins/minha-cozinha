@@ -1,0 +1,39 @@
+# Muffins de Frango e Espinafres
+categoria: Carne
+porções: 4
+tempo: 40
+dificuldade: Fácil
+modos: Normal, Airfryer
+
+## Ingredientes
+400 g  | peito de frango | cozido e desfiado
+6 un   | ovos
+100 g  | espinafres baby
+50 g   | queijo mozzarella | ralada ou em pedaços
+1 cc   | alho em pó
+1 cs   | pimentão doce
+q.b.   | sal fino
+q.b.   | pimenta preta
+
+## Nutrição
+calorias: 216
+proteína: 36
+hidratos: 3
+gordura: 6
+
+## Normal
+1. Pré-aqueça o forno a 180°C. Unte formas de muffin com spray de azeite ou use formas de silicone.
+2. Coza o frango (ou use frango desfiado de preparação anterior). Desfie bem e reserve.
+3. Numa tigela grande, bata os ovos ligeiramente. Adicione o frango desfiado, os espinafres picados grosseiramente, a mozzarella, o alho em pó, o pimentão doce, o sal e a pimenta. Misture bem.
+4. Distribua a mistura pelas cavidades da forma de muffin, enchendo cada uma até 3/4 da capacidade.
+5. Asse a 180°C durante 22-25 minutos até os muffins estarem firmes no centro e levemente dourados. Verifique a cozedura com um palito. Deixe arrefecer 5 minutos antes de desenformar.
+⏱ 25
+6. Guarde em caixa hermética no frigorífico até 4 dias ou congele até 2 meses. Para reaquecer, use o micro-ondas 60-90 segundos ou a air fryer 5 minutos a 160°C.
+
+## Airfryer
+1. Pré-aqueça o forno a 180°C. Use formas de silicone na air fryer.
+2. Coza o frango (ou use frango desfiado de preparação anterior). Desfie bem e reserve.
+3. Numa tigela grande, bata os ovos ligeiramente. Adicione o frango desfiado, os espinafres picados grosseiramente, a mozzarella, o alho em pó, o pimentão doce, o sal e a pimenta. Misture bem.
+4. Distribua a mistura pelas formas de silicone.
+5. Cozinhe a 160°C durante 15-18 minutos até estarem firmes.
+⏱ 18

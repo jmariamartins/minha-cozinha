@@ -1,0 +1,34 @@
+# Bacalhau Espiritual
+categoria: Peixe
+porções: 6
+tempo: 50
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+50 g    | pão | sobras, partido em pedaços (para o pão ralado)
+100 g   | pão | da véspera, em pedaços
+100 g   | leite
+50 g    | azeite virgem extra
+200 g   | cebola
+2 dente | alho fresco
+300 g   | cenoura | cortada em pedaços
+400 g   | bacalhau desfiado e demolhado | bem espremido
+1 pitada| sal fino
+1 pitada| pimenta preta
+300 g   | leite
+60 g    | farinha de trigo
+30 g    | manteiga
+0.5 cc  | sal fino
+1 pitada| pimenta preta
+1 pitada| noz-moscada
+200 g   | natas
+
+## Nutrição
+calorias: 421
+proteína: 19
+hidratos: 29
+gordura: 26
+
+## Bimby
+1. [Preencher com os passos do Cookidoo]

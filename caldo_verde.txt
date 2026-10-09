@@ -1,0 +1,47 @@
+# Caldo Verde
+categoria: Sopa
+porções: 6
+tempo: 25
+dificuldade: Fácil
+modos: Normal, Bimby
+
+## Ingredientes
+4 un    | batata
+200 g   | couve galega
+1 un    | chouriço de carne | de vela
+1 un    | cebola
+2 dente | alho fresco
+3 cs    | azeite virgem extra
+1.5 l   | água
+q.b.    | sal fino
+q.b.    | pimenta preta
+
+## Nutrição
+calorias: 341
+proteína: 12
+hidratos: 28
+gordura: 20
+
+## Normal
+1. Descasque as batatas e corte em pedaços grosseiros. Pique a cebola e o alho. Não precisam de ser cortados em pedaços perfeitos — vão ser triturados.
+2. Numa panela grande, aqueça 1 cs de azeite e refogue a cebola e o alho até ficarem translúcidos.
+⏱ 3
+3. Junte as batatas e a água. Tempere com sal e deixe cozer até as batatas ficarem bem macias.
+⏱ 15
+4. Enquanto as batatas cozem, lave a couve galega, retire o talo central e corte as folhas em tiras muito finas (juliana). Quanto mais finas, melhor.
+5. Triture as batatas directamente na panela com a varinha mágica até obter um creme liso.
+6. Junte a couve cortada ao creme e deixe cozinhar apenas 5 minutos — deve ficar verde-vivo e com textura. Não coza demais.
+⏱ 5
+7. Corte o chouriço em rodelas e grelhe rapidamente numa frigideira sem gordura.
+⏱ 2
+8. Sirva em tigelas com rodelas de chouriço por cima e um fio generoso de azeite cru.
+
+## Bimby
+1. Coloque a cebola e o alho no copo. Triture 5 seg/vel 7. Adicione 1 cs de azeite e programe 3 min/120°C/vel 1.
+⏱ 3
+2. Junte as batatas em pedaços, a água e o sal. Programe 25 min/100°C/vel 1.
+⏱ 25
+3. Triture 30 seg/vel 5 até obter um creme liso.
+4. Adicione a couve em tiras finas e programe 5 min/100°C/vel colher inversa. Para couve mais al dente, reduza para 3 minutos.
+⏱ 5
+5. Sirva com rodelas de chouriço grelhado e um fio de azeite cru.

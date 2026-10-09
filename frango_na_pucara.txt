@@ -1,0 +1,42 @@
+# Frango na Púcara
+categoria: Carne
+porções: 4
+tempo: 80
+dificuldade: Médio
+modos: Normal, Bimby
+
+## Ingredientes
+1 un    | frango inteiro | partido em pedaços (ou 1 kg de coxas)
+100 g   | presunto fatiado | em cubos pequenos
+3 un    | tomate | maduros, em cubos
+2 un    | cebola | pequenas, em meias-luas
+4 dente | alho fresco | laminados
+150 ml  | vinho branco seco
+2 cs    | aguardente
+1 cs    | mostarda
+2 folha | louro
+3 cs    | azeite virgem extra
+q.b.    | sal fino
+q.b.    | pimenta preta
+
+## Nutrição
+calorias: 1051
+proteína: 80
+hidratos: 12
+gordura: 70
+
+## Normal
+1. Corte o frango em pedaços e tempere com sal, pimenta e a mostarda. Corte a cebola em meias-luas, lamine o alho, corte o tomate em cubos e o presunto em cubos pequenos.
+2. Numa púcara de barro ou tacho de fundo grosso, coloque o azeite e faça uma cama com metade da cebola, alho e tomate. Disponha os pedaços de frango por cima. A púcara de barro é tradicional e dá sabor especial, mas um tacho com tampa também resulta.
+3. Cubra o frango com o presunto, a restante cebola, alho, tomate e as folhas de louro.
+4. Regue com o vinho e a aguardente. Tape bem. A aguardente perfuma e amacia a carne. Se preferir sem álcool, dispense-a.
+5. Leve a lume muito brando (ou ao forno a 160°C) e deixe estufar 50-60 minutos, sem destapar, até o frango estar muito tenro e o molho apurado. O segredo da púcara é a cozedura lenta e fechada, sem mexer, para a carne cozer no próprio vapor e nos sucos.
+⏱ 60
+6. Rectifique os temperos e sirva com o molho generoso, acompanhado de batatas fritas ou arroz branco.
+
+## Bimby
+1. Coloque a cebola e o alho no copo. Pique 5 seg/vel 5. Junte o azeite e programe 5 min/Varoma/vel 1.
+⏱ 5
+2. Adicione o tomate, presunto, louro, vinho, aguardente e mostarda. Coloque os pedaços de frango temperados com sal, pimenta e mostarda directamente no copo.
+3. Programe 50 min/100°C/vel colher invertida, até o frango estar tenro. Rectifique os temperos e sirva com batatas fritas ou arroz branco.
+⏱ 50

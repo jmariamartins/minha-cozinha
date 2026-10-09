@@ -1,0 +1,43 @@
+# Salada de Pimento e Tomate Assados
+categoria: Salada
+porções: 4
+tempo: 45
+dificuldade: Fácil
+modos: Normal, Airfryer
+
+## Ingredientes
+3 un    | pimento vermelho
+4 un    | tomate | maduros
+2 dente | alho fresco
+3 cs    | salsa fresca
+5 cs    | azeite virgem extra
+1 cs    | vinagre de vinho
+q.b.    | sal fino
+q.b.    | pimenta preta
+
+## Nutrição
+calorias: 227
+proteína: 3
+hidratos: 12
+gordura: 19
+
+## Normal
+1. Pré-aqueça o forno a 220°C com função grelhador.
+⏱ 10
+2. Disponha os pimentos inteiros e os tomates inteiros num tabuleiro forrado com papel vegetal.
+3. Asse 25-30 minutos, virando a meio, até a pele estar bem queimada e enrugada de todos os lados. A pele tem mesmo de estar preta — é isso que permite descascar facilmente e dá o sabor a fumeiro.
+⏱ 28
+4. Retire e coloque imediatamente os pimentos numa tigela tapada com película. O vapor solta a pele. Deixe 15 minutos.
+⏱ 15
+5. Descasque pimentos e tomates, retire as sementes dos pimentos, e corte ambos em tiras finas.
+6. Coloque numa travessa, polvilhe com alho picado fino e salsa.
+7. Tempere com sal, pimenta, vinagre e regue generosamente com azeite. Misture suavemente e deixe ganhar sabor 15 minutos antes de servir.
+⏱ 15
+
+## Airfryer
+1. Disponha os pimentos no cesto da air fryer. Cozinhe a 200°C, 15 min, virando a meio.
+⏱ 15
+2. Junte os tomates e cozinhe mais 8 min a 200°C.
+⏱ 8
+3. Transfira para uma tigela tapada. Deixe repousar 15 minutos. Descasque pimentos e tomates, retire sementes dos pimentos e corte em tiras.
+4. Polvilhe com alho picado fino e salsa. Tempere com sal, pimenta, vinagre e azeite. Misture e sirva.

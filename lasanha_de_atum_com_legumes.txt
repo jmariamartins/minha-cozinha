@@ -1,0 +1,46 @@
+# Lasanha de Atum com Legumes
+categoria: Peixe
+porções: 8
+tempo: 75
+dificuldade: Médio
+modos: Normal
+
+## Ingredientes
+16 un   | massa de lasanha | folhas
+200 g   | ervilhas congeladas
+200 g   | cogumelos frescos | laminados
+200 g   | atum em lata | escorrido e desfiado
+100 g   | alho-francês
+100 g   | cenoura
+100 g   | curgete
+200 g   | cebola | picada para recheio e molho
+4 dente | alho fresco | picados para recheio e molho
+300 g   | tomate fresco maduro | para o molho
+1000 g  | tomate pelado | para o molho
+50 g    | pão ralado | para o topo
+3 cs    | azeite virgem extra
+1 folha | louro
+q.b.    | sal grosso
+q.b.    | pimenta preta
+
+## Nutrição
+calorias: 351
+proteína: 18
+hidratos: 55
+gordura: 8
+
+## Normal
+1. Corte todos os legumes em cubos. Pique cebola e alho.
+⏱ 12
+2. Leve ao lume um tacho com o azeite. Adicione o atum desfiado, os cogumelos laminados, as ervilhas descongeladas, o alho-francês, a cenoura, a curgete e a folha de louro. Tempere com sal e pimenta. Tape e deixe estufar em lume médio 5 minutos.
+⏱ 8
+3. Para o molho de tomate: leve ao lume azeite com o alho e a cebola picada. Deixe alourar 3-4 minutos.
+⏱ 5
+4. Acrescente o tomate fresco maduro e deixe apurar. Junte o tomate pelado em cubos e cozinhe em lume brando 15 minutos.
+⏱ 18
+5. Acrescente 5 dl de água, deixe ferver mais 5 minutos. Reduza com varinha mágica e passe pelo chinês. Tempere com sal e pimenta.
+⏱ 8
+6. Num tabuleiro de forno, coloque camadas intercaladas: folhas de lasanha, preparado de legumes e atum, molho de tomate. Repita até esgotar os ingredientes.
+⏱ 10
+7. Polvilhe com pão ralado e leve ao forno a 180°C durante 40 minutos.
+⏱ 40

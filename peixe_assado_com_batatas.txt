@@ -1,0 +1,54 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Peixe Assado com Batatas\
+categoria: Peixe\
+por\'e7\'f5es: 4\
+tempo: 60\
+dificuldade: F\'e1cil\
+modos: Normal\
+\pard\pardeftab720\partightenfactor0
+\cf0 prep: batatas 5 min antes\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+## Ingredientes\
+1200 g | pargo fresco\
+800 g | batata\
+5 dente | alho fresco\
+5 cs | azeite virgem extra\
+2 folha | louro\
+2 ramo | alecrim fresco\
+1 cs | piment\'e3o doce\
+1 un | lim\'e3o\
+1 cc | sal fino\
+1 pitada | pimenta preta\
+100 ml | vinho branco seco\
+\
+## Nutri\'e7\'e3o\
+calorias: 658\
+prote\'edna: 65\
+hidratos: 39\
+gordura: 25\
+\
+## Normal\
+1. Pr\'e9-aque\'e7a o forno a 200\'b0C. Corte as batatas em rodelas de 0,5 cm. Disponha-as num tabuleiro untado com azeite, sobrepondo ligeiramente. Tempere com sal e pimenta.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf0 \uc0\u9201 
+\f0  5\
+2. Espalhe os dentes de alho ligeiramente esmagados (com casca), as folhas de louro e o alecrim sobre as batatas. Regue com metade do azeite e o vinho branco.\
+3. Leve ao forno durante 20 minutos para as batatas come\'e7arem a cozer.\
+
+\f1 \uc0\u9201 
+\f0  20\
+4. Fa\'e7a 3-4 golpes de cada lado do peixe. Tempere bem por dentro e por fora com sal, pimenta e piment\'e3o doce. Esprema meio lim\'e3o sobre o peixe.\
+5. Retire o tabuleiro do forno. Coloque o peixe sobre as batatas. Regue com o restante azeite e o sumo do restante lim\'e3o.\
+6. Volte ao forno durante 25-30 minutos, dependendo do tamanho do peixe. Regue o peixe com o molho do tabuleiro a meio da cozedura para n\'e3o secar.\
+
+\f1 \uc0\u9201 
+\f0  30\
+7. Sirva directamente do tabuleiro, com o molho de azeite e lim\'e3o por cima.}

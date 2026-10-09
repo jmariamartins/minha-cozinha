@@ -1,0 +1,51 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Frango Piri-Piri Grelhado\
+categoria: Carne\
+por\'e7\'f5es: 4\
+tempo: 40\
+dificuldade: F\'e1cil\
+modos: Normal\
+\pard\pardeftab720\partightenfactor0
+\cf0 prep: marinada 120 min antes\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+## Ingredientes\
+8 un | coxas de frango\
+2 cs | piri-piri\
+4 dente | alho fresco\
+2 un | lim\'e3o\
+3 cs | azeite virgem\
+1 cc | piment\'e3o doce\
+2 | folha louro\
+q.b. | sal fino\
+q.b. | pimenta preta\
+\
+## Nutri\'e7\'e3o\
+calorias: 954\
+prote\'edna: 105\
+hidratos: 5\
+gordura: 56\
+\
+## Normal\
+1. Fa\'e7a cortes na pele das coxas de frango para a marinada penetrar.\
+2. Misture o piri-piri, o alho esmagado, o sumo de lim\'e3o, o azeite, o piment\'e3o doce, sal e pimenta.\
+3. Envolva o frango na marinada e deixe no frigor\'edfico pelo menos 2 horas, idealmente de um dia para o outro.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1 \cf0 \uc0\u9201 
+\f0  120\
+4. Grelhe em lume m\'e9dio com a pele virada para baixo durante 12 a 15 minutos.\
+
+\f1 \uc0\u9201 
+\f0  15\
+5. Vire e grelhe mais 10 minutos, pincelando com a marinada restante.\
+
+\f1 \uc0\u9201 
+\f0  10\
+6. Verifique que o frango est\'e1 cozido (sem rosa junto ao osso). Sirva com lim\'e3o.}

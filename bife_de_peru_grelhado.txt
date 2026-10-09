@@ -1,0 +1,30 @@
+# Bife de Peru Grelhado
+categoria: Carne
+porções: 4
+tempo: 20
+dificuldade: Fácil
+modos: Airfryer
+
+## Ingredientes
+600 g    | bife de peru | bifes finos (4 un)
+3 dente  | alho fresco | picados ou laminados
+1 un     | limão | sumo e raspas
+30 g     | manteiga
+2 cs     | azeite virgem extra
+1 cs     | mostarda
+1 punhado| salsa fresca
+q.b.     | sal fino
+q.b.     | pimenta preta
+
+## Nutrição
+calorias: 332
+proteína: 46
+hidratos: 3
+gordura: 16
+
+## Airfryer
+1. Bata levemente os bifes de peru entre duas folhas de película aderente para ficarem com espessura uniforme (cerca de 1 cm). Tempere com sal, pimenta e azeite dos dois lados.
+2. Coloque na air fryer a 200°C durante 10-12 minutos, virando a meio.
+⏱ 12
+3. Prepare o molho de manteiga, alho, mostarda numa frigideira pequena. Regue os bifes com sumo de limão.
+4. Sirva os bifes com o molho por cima.

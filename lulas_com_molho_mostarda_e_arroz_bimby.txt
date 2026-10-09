@@ -1,0 +1,33 @@
+# Lulas com Molho de Mostarda e Arroz
+categoria: Peixe
+porções: 6
+tempo: 50
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+10 g    | salsa fresca
+30 g    | azeite virgem extra
+150 g   | cebola
+2 dente | alho fresco
+250 g   | tomate | em pedaços
+1000 g  | lulas limpas descongeladas | cortadas em pedaços
+50 g    | vinho branco
+50 g    | vinho tinto
+1 folha | louro
+1.5 cc  | sal fino
+1 cc    | pimenta preta
+300 g   | arroz carolino
+400 g   | água
+2 un    | gemas de ovo
+1.5 cs  | mostarda
+0.5 un  | limão | só o sumo
+
+## Nutrição
+calorias: 424
+proteína: 31
+hidratos: 51
+gordura: 9
+
+## Bimby
+1. [Preencher com os passos do Cookidoo]
