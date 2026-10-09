@@ -62,6 +62,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--areia);color:var(--texto)
 .import-recipe-row .warn{color:var(--aviso);font-size:11px}
 .import-recipe-row .ok{color:var(--verde);font-size:11px}
 .btn-danger{margin-top:16px;width:100%;padding:12px;background:white;color:#c62828;border:1px solid #ef9a9a;border-radius:var(--radius);font-size:14px;cursor:pointer;font-family:inherit}
+.btn-sync{width:100%;padding:15px;background:var(--verde);color:white;border:none;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+.btn-sync:disabled{opacity:.6;cursor:not-allowed}
+.sync-status{font-size:13px;color:var(--texto-suave);text-align:center;margin-bottom:10px;min-height:20px}
+.sync-status.ok{color:#2e7d32}
+.sync-status.err{color:#c62828}
+.home-sync-row{margin:0 16px 12px;display:flex;align-items:center;gap:10px;background:var(--verde-claro);border:1.5px solid var(--verde-mid);border-radius:var(--radius);padding:12px 14px;cursor:pointer}
+.home-sync-row:active{opacity:.8}
+.home-sync-badge{font-size:11px;font-weight:600;color:var(--verde);background:white;border-radius:20px;padding:2px 8px;margin-left:auto;white-space:nowrap}
 .debug-box{background:#1c1c1c;color:#a3e6b0;font-family:monospace;font-size:11px;padding:12px;border-radius:var(--radius-sm);margin-top:8px;white-space:pre-wrap;max-height:200px;overflow-y:auto;display:none}
 
 /* RECIPE LIST */
@@ -318,11 +326,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--areia);color:var(--texto)
       <div class="home-btn-text"><h3>Como usar a Minha Cozinha</h3><p>Guia rápido de todas as funcionalidades</p></div>
     </button>
   </div>
+  <div class="home-sync-row" onclick="syncFromGitHub(true)">
+    <span style="font-size:20px">☁️</span>
+    <div>
+      <div style="font-size:14px;font-weight:600">Sincronizar Receitas</div>
+      <div class="recipes-count" id="recipesCount">Nenhuma receita carregada</div>
+    </div>
+    <span class="home-sync-badge" id="syncBadge" style="display:none"></span>
+  </div>
   <div class="home-import" onclick="goTo('sImport')">
     <span style="font-size:22px">📂</span>
     <div>
-      <div style="font-size:14px;font-weight:600">Importar Receitas</div>
-      <div class="recipes-count" id="recipesCount">Nenhuma receita carregada</div>
+      <div style="font-size:14px;font-weight:600">Importar ficheiro local</div>
+      <div style="font-size:12px;color:var(--texto-suave)">Adiciona receitas manualmente</div>
     </div>
   </div>
 </div>
@@ -331,11 +347,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--areia);color:var(--texto)
 <div class="screen" id="sImport">
   <div class="import-wrap">
     <div class="import-card">
-      <h3>Como importar</h3>
-      <p>Seleciona todos os ficheiros <strong>.txt</strong> das tuas receitas de uma vez. As receitas ficam guardadas no browser e carregam automaticamente da próxima vez.</p>
+      <h3>Receitas do GitHub</h3>
+      <p>As receitas são carregadas automaticamente da pasta <strong>recipes/</strong> do teu repositório. Basta adicionar um ficheiro <strong>.txt</strong> lá e sincronizar aqui.</p>
+      <p style="margin-top:8px;font-size:12px;color:var(--texto-suave)">Ou importa ficheiros locais manualmente com o botão abaixo.</p>
     </div>
+    <button class="btn-sync" id="btnSyncGH" onclick="syncFromGitHub(true)">
+      ☁️ Sincronizar com GitHub
+    </button>
+    <div class="sync-status" id="syncStatus"></div>
     <label class="import-label">
-      📂 Selecionar ficheiros de receitas
+      📂 Adicionar ficheiro local
       <input type="file" multiple accept=".txt" style="display:none" onchange="importRecipes(this)">
     </label>
     <div id="importStatus" style="text-align:center;font-size:14px;color:var(--texto-suave);margin-bottom:10px"></div>
@@ -855,11 +876,115 @@ function saveStorage() {
   }
 }
 
+// ═══════════════════════════════════════════════
+// GITHUB SYNC
+// ═══════════════════════════════════════════════
+const GH_OWNER = 'jmariamartins';
+const GH_REPO  = 'minha-cozinha';
+const GH_BRANCH = 'main';
+const GH_API = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/recipes`;
+const GH_RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/recipes/`;
+
+function setSyncUI(loading, msg, ok) {
+  const btn = document.getElementById('btnSyncGH');
+  const status = document.getElementById('syncStatus');
+  if (btn) btn.disabled = loading;
+  if (btn) btn.innerHTML = loading ? '⏳ A sincronizar...' : '☁️ Sincronizar com GitHub';
+  if (status) {
+    status.textContent = msg || '';
+    status.className = 'sync-status' + (ok === true ? ' ok' : ok === false ? ' err' : '');
+  }
+}
+
+function updateSyncBadge() {
+  const badge = document.getElementById('syncBadge');
+  if (!badge) return;
+  const ts = localStorage.getItem('mck_sync_ts');
+  if (ts) {
+    const d = new Date(parseInt(ts));
+    const fmt = d.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit'}) + ' ' +
+                d.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+    badge.textContent = 'Sync ' + fmt;
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+async function syncFromGitHub(manual = false) {
+  setSyncUI(true, 'A ligar ao GitHub…');
+  try {
+    // 1. Obter lista de ficheiros da pasta recipes/
+    const listResp = await fetch(GH_API, {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!listResp.ok) throw new Error(`GitHub API: ${listResp.status} ${listResp.statusText}`);
+    const files = await listResp.json();
+    const txtFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.txt'));
+
+    if (txtFiles.length === 0) {
+      setSyncUI(false, 'Nenhum ficheiro .txt encontrado em recipes/', false);
+      return;
+    }
+
+    setSyncUI(true, `A descarregar ${txtFiles.length} receita(s)…`);
+
+    // 2. Descarregar cada ficheiro em paralelo
+    const results = await Promise.allSettled(
+      txtFiles.map(f => fetch(GH_RAW + encodeURIComponent(f.name)).then(r => {
+        if (!r.ok) throw new Error(r.status);
+        return r.text().then(txt => ({ name: f.name, txt }));
+      }))
+    );
+
+    const loaded = [];
+    const erros = [];
+    results.forEach(r => {
+      if (r.status === 'fulfilled') {
+        try {
+          const rec = parseRecipe(r.value.txt, r.value.name);
+          if (rec.titulo) loaded.push(rec);
+          else erros.push(r.value.name + ': título não encontrado');
+        } catch(e) { erros.push(r.value.name + ': ' + e.message); }
+      } else {
+        erros.push('Erro ao descarregar ficheiro');
+      }
+    });
+
+    // 3. Guardar e actualizar UI
+    if (loaded.length > 0) {
+      recipes = loaded;
+      saveStorage();
+      localStorage.setItem('mck_sync_ts', Date.now().toString());
+      updateCount();
+      updateSyncBadge();
+    }
+
+    const msg = `✅ ${loaded.length} receita(s) sincronizada(s)` +
+      (erros.length ? ` · ⚠️ ${erros.length} erro(s)` : '');
+    setSyncUI(false, msg, loaded.length > 0);
+
+    // Mostrar lista no ecrã de importação
+    if (manual) showImportResult(loaded, erros);
+
+  } catch(e) {
+    console.error('Sync GitHub:', e);
+    setSyncUI(false, '❌ Erro: ' + (e.message || 'sem ligação'), false);
+  }
+}
+
 function loadStorage() {
   try {
     const d = localStorage.getItem('mck_v2');
     if (d) { recipes = JSON.parse(d); updateCount(); }
   } catch(e) { console.warn('Erro ao carregar:', e); }
+  // Auto-sync silencioso se a última sync foi há mais de 1 hora
+  updateSyncBadge();
+  const lastSync = parseInt(localStorage.getItem('mck_sync_ts') || '0');
+  const agora = Date.now();
+  if (agora - lastSync > 60 * 60 * 1000) {
+    setTimeout(() => syncFromGitHub(false), 1500);
+  }
 }
 
 function clearRecipes() {

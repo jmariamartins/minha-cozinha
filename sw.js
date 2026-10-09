@@ -26,20 +26,20 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Fetch: cache-first for our assets, network-first for API calls
+// Fetch: cache-first para os assets da app, sempre rede para GitHub e Anthropic
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Always go to network for Anthropic API
-  if (url.hostname.includes('anthropic.com')) {
-    return; // let it pass through normally
+  // Nunca interceptar pedidos ao GitHub (receitas) nem à API da Anthropic
+  if (url.hostname.includes('github') || url.hostname.includes('anthropic.com')) {
+    return;
   }
 
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
       return fetch(e.request).then(resp => {
-        // Cache successful GET responses for our own origin
+        // Cachear respostas GET da nossa própria origem
         if (e.request.method === 'GET' && resp.status === 200 &&
             url.origin === self.location.origin) {
           const clone = resp.clone();
@@ -47,7 +47,7 @@ self.addEventListener('fetch', e => {
         }
         return resp;
       }).catch(() => {
-        // Offline fallback: return cached index.html for navigation
+        // Fallback offline: devolve o index.html em cache para navegação
         if (e.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
