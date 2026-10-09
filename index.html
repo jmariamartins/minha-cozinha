@@ -829,7 +829,12 @@ function importRecipes(input) {
         warnings.push(`${f.name}: erro - ${err.message}`);
       }
       if (++done === files.length) {
-        recipes = newRecipes;
+        // Merge: acrescenta ou substitui pelo título, sem apagar o resto
+        newRecipes.forEach(nr => {
+          const idx = recipes.findIndex(r => r.titulo === nr.titulo);
+          if (idx >= 0) recipes[idx] = nr; // actualiza se já existe
+          else recipes.push(nr);           // acrescenta se é nova
+        });
         saveStorage();
         updateCount();
         showImportResult(newRecipes, warnings);
@@ -837,7 +842,13 @@ function importRecipes(input) {
     };
     fr.onerror = () => {
       warnings.push(`${f.name}: erro ao ler ficheiro`);
-      if (++done === files.length) { recipes = newRecipes; saveStorage(); updateCount(); showImportResult(newRecipes, warnings); }
+      if (++done === files.length) {
+        newRecipes.forEach(nr => {
+          const idx = recipes.findIndex(r => r.titulo === nr.titulo);
+          if (idx >= 0) recipes[idx] = nr; else recipes.push(nr);
+        });
+        saveStorage(); updateCount(); showImportResult(newRecipes, warnings);
+      }
     };
     fr.readAsText(f, 'UTF-8');
   });
