@@ -1,0 +1,33 @@
+# Salada de Frango com Iogurte
+categoria: Carne
+porções: 2
+tempo: 25
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+300 g   | peito de frango
+1 un    | alface | pequena
+0.5 un  | pepino | em meias-luas
+150 g   | tomate cereja | ao meio
+0.25 un | cebola roxa | às rodelas finas
+150 g   | iogurte grego
+0.5 un  | limão | só o sumo
+1 dente | alho fresco | esmagado
+q.b.    | hortelã fresca | picada
+1 cs    | azeite virgem extra
+q.b.    | sal fino
+q.b.    | pimenta preta
+
+## Nutrição
+calorias: 413
+proteína: 54
+hidratos: 9
+gordura: 17
+
+## Normal
+1. Tempere o peito de frango com sal, pimenta e um fio de azeite. Grelhe em frigideira bem quente 4-5 minutos de cada lado, até dourado e cozido. Deixe repousar 5 minutos e corte em tiras.
+⏱ 10
+2. Misture o iogurte grego com o sumo de limão, o alho esmagado, a hortelã picada, sal e pimenta.
+3. Monte a salada: alface rasgada, pepino, tomate cereja e cebola roxa.
+4. Disponha as tiras de frango morno por cima e regue generosamente com o molho de iogurte. Sirva de imediato.

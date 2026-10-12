@@ -1,0 +1,38 @@
+# Chow Mein de Frango
+categoria: Carne
+porções: 4
+tempo: 30
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+250 g   | noodles de ovo
+400 g   | peito de frango | em tiras
+1 un    | cenoura | em juliana
+1 un    | pimento vermelho | em tiras
+1 un    | cebola | em meias-luas
+2 dente | alho fresco
+1 cs    | gengibre fresco | ralado
+3 cs    | molho de soja
+2 cs    | molho de ostra
+1 cc    | óleo de sésamo
+3 cs    | azeite virgem extra
+q.b.    | sal fino
+
+## Nutrição
+calorias: 570
+proteína: 42
+hidratos: 56
+gordura: 19
+
+## Normal
+1. Coza os noodles de ovo segundo a embalagem, escorra e passe por água fria para pararem de cozer. Reserve com um fio de azeite.
+⏱ 5
+2. Misture o molho de soja, o molho de ostra e o óleo de sésamo com 2 cs de água. Reserve.
+3. Aqueça um wok (ou frigideira grande) bem quente com azeite. Salteie o frango temperado com sal até dourar. Retire.
+⏱ 5
+4. No mesmo wok, salteie o alho, o gengibre, a cebola, a cenoura e o pimento 2-3 minutos em lume forte, mexendo sempre — devem ficar crocantes.
+⏱ 3
+5. Devolva o frango, junte os noodles e o molho e salteie 2 minutos, envolvendo tudo com dois garfos ou pinças.
+⏱ 2
+6. Sirva de imediato, bem quente.
