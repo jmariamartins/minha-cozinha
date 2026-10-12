@@ -1,61 +1,50 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2580
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+# Bacalhau Espiritual
+categoria: Peixe
+porções: 6
+tempo: 60
+dificuldade: Fácil
+modos: Normal, Bimby
 
-\f0\fs24 \cf0 # Bacalhau Espiritual\
-categoria: Peixe\
-por\'e7\'f5es: 6\
-tempo: 60\
-dificuldade: F\'e1cil\
-modos: Bimby\
-\
-## Ingredientes\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 500 g | bacalhau desfiado e demolhado\
-200 g | p\'e3o de mistura\
-300 ml | leite\
-2 un | cebola\
-2 dente | alho fresco\
-2 un | cenoura\
-200 ml | natas\
-30 g | manteiga\
-50 g | queijo parmes\'e3o ralado\
-3 cs | azeite virgem extra\
-q.b. | sal fino\
-q.b. | pimenta preta\
-q.b. | noz-moscada\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 \
-## Nutri\'e7\'e3o\
-calorias: 486\
-prote\'edna: 28\
-hidratos: 28\
-gordura: 29\
-\
-## Bimby\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 1. Coloque o p\'e3o e o leite no copo. Programe 5 min/70\'b0C/vel 3. Retire e reserve.\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+## Ingredientes
+500 g   | bacalhau desfiado e demolhado
+200 g   | pão de mistura
+300 ml  | leite
+2 un    | cebola
+2 dente | alho fresco
+2 un    | cenoura
+200 ml  | natas
+30 g    | manteiga
+50 g    | queijo parmesão ralado
+3 cs    | azeite virgem extra
+q.b.    | sal fino
+q.b.    | pimenta preta
+q.b.    | noz-moscada
 
-\f1 \cf0 \uc0\u9201 
-\f0  5\
-2. Triture a cebola, o alho e a cenoura. Programe 5 seg/vel 5.\
+## Nutrição
+calorias: 486
+proteína: 28
+hidratos: 28
+gordura: 29
 
-\f1 \uc0\u9201 
-\f0  5\
-3. Adicione o azeite. Programe 5 min/120\'b0C/vel 1.\
+## Normal
+1. Demolhe o pão no leite morno durante 5 minutos até amolecer. Escorra e amasse com um garfo até obter uma papa. Reserve.
+⏱ 5
+2. Pique finamente a cebola, o alho e a cenoura (ou use uma picadora).
+3. Aqueça o azeite numa frigideira larga em lume médio. Refogue a cebola, o alho e a cenoura 5-7 minutos até amolecerem.
+⏱ 6
+4. Junte o bacalhau desfiado e a papa de pão. Tempere com sal, pimenta e noz-moscada. Mexa e cozinhe 5 minutos em lume médio.
+⏱ 5
+5. Unte um tabuleiro com a manteiga e transfira a mistura. Regue com as natas e polvilhe com o parmesão.
+6. Leve ao forno a 180°C durante 25-30 minutos até gratinar.
+⏱ 28
 
-\f1 \uc0\u9201 
-\f0  5\
-4. Junte o bacalhau desfiado e a papa de p\'e3o. Programe 5 min/100\'b0C/vel colher inversa.\
-
-\f1 \uc0\u9201 
-\f0  5\
-5. Transfira para um tabuleiro untado, cubra com as natas e polvilhe com parmes\'e3o. Leve ao forno a 180\'b0C durante 25-30 minutos.\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-
-\f1 \cf0 \uc0\u9201 
-\f0  25}
+## Bimby
+1. Coloque o pão e o leite no copo. Programe 5 min/70°C/vel 3. Retire e reserve.
+⏱ 5
+2. Triture a cebola, o alho e a cenoura. Programe 5 seg/vel 5.
+3. Adicione o azeite. Programe 5 min/120°C/vel 1.
+⏱ 5
+4. Junte o bacalhau desfiado e a papa de pão. Programe 5 min/100°C/vel colher inversa.
+⏱ 5
+5. Transfira para um tabuleiro untado com manteiga, cubra com as natas e polvilhe com parmesão. Leve ao forno a 180°C durante 25-30 minutos.
+⏱ 28
