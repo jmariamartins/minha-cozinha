@@ -1,0 +1,48 @@
+# Moqueca de Camarão
+categoria: Peixe
+porções: 6
+tempo: 20
+dificuldade: Fácil
+modos: Normal, Bimby
+
+## Ingredientes
+150 g   | cebola
+2 dente | alho fresco
+30 g    | azeite virgem extra
+200 g   | tomate | em pedaços
+200 g   | polpa de tomate
+150 g   | pimento verde
+1 cs    | coentros frescos | só as folhas
+1 cs    | salsa fresca | só as folhas
+1 cs    | cebolinho | picado
+200 g   | leite de coco
+500 g   | miolo de camarão
+400 g   | filete de peixe | pescada ou cherne, cortados em três
+1.5 cc  | caldo de marisco
+1 pitada| estragão
+1 pitada| pimenta-de-caiena
+
+## Nutrição
+calorias: 260
+proteína: 11
+hidratos: 31
+gordura: 10
+
+## Normal
+1. Pique finamente a cebola, o alho, o pimento, os coentros, a salsa e o cebolinho.
+2. Aqueça o azeite numa panela larga em lume médio. Junte a cebola, o alho, o pimento e as ervas e refogue 5 minutos até amolecerem.
+⏱ 5
+3. Adicione o tomate em pedaços e a polpa de tomate e cozinhe mais 3 minutos, mexendo.
+⏱ 3
+4. Junte o leite de coco e cozinhe 3 minutos em lume médio.
+⏱ 3
+5. Adicione o camarão, os filetes de peixe cortados em três, o caldo de marisco, o estragão e a pimenta-de-caiena. Cozinhe 5 minutos em lume médio-baixo, mexendo suavemente, até o peixe estar cozinhado. Sirva com arroz.
+⏱ 5
+
+## Bimby
+1. Coloque no copo a cebola, o alho, o azeite, o tomate, o pimento, os coentros, a salsa e o cebolinho, triture 15 seg/vel 7 e refogue 5 min/120°C/vel 1.
+⏱ 5
+2. Adicione o leite de coco e cozinhe 3 min/100°C/vel 1.
+⏱ 3
+3. Adicione o camarão, os filetes, o caldo de marisco, o estragão e a pimenta-de-caiena e cozinhe 5 min/100°C/vel colher inversa. Sirva com arroz.
+⏱ 5
