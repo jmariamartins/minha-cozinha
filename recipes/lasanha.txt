@@ -1,0 +1,63 @@
+# Lasanha
+categoria: Carne
+porções: 6
+tempo: 90
+dificuldade: Fácil
+modos: Normal, Bimby
+
+## Ingredientes
+200 g   | queijo parmesão | cortado em pedaços
+200 g   | mistura de legumes | aipo, cenoura e cebola, em pedaços
+40 g    | azeite virgem extra
+800 g   | carne picada de vaca
+100 g   | vinho branco
+300 g   | tomate | em pedaços
+1.5 cc  | sal fino
+1 pitada| pimenta preta
+1000 g  | leite
+80 g    | manteiga | à temperatura ambiente
+100 g   | farinha de trigo
+0.5 cc  | sal fino
+1 pitada| noz-moscada
+250 g   | placas de lasanha | aprox. 12 placas
+
+## Nutrição
+calorias: 984
+proteína: 49
+hidratos: 59
+gordura: 59
+
+## Normal
+1. Rale o parmesão finamente e reserve.
+2. Pique finamente os legumes (aipo, cenoura e cebola).
+3. Aqueça o azeite numa panela larga em lume médio. Refogue os legumes 5 minutos até amolecerem.
+⏱ 5
+4. Junte a carne picada e cozinhe 8 minutos em lume médio-alto, mexendo para desfazer os grumos.
+⏱ 8
+5. Adicione o vinho branco e deixe evaporar 5 minutos.
+⏱ 5
+6. Junte o tomate em pedaços, o sal e a pimenta. Cozinhe em lume médio 20 minutos, mexendo ocasionalmente, até o molho apurar. Reserve.
+⏱ 20
+7. Num tacho, derreta a manteiga em lume médio. Junte a farinha e mexa 1 minuto. Adicione o leite aos poucos, mexendo sempre, até obter um molho liso. Tempere com sal e noz-moscada. Cozinhe 8-10 minutos até engrossar.
+⏱ 10
+8. Pré-aqueça o forno a 180°C.
+9. Num pirex, coloque um pouco de bolonhesa no fundo, cubra com uma camada de placas de lasanha e uma camada de bolonhesa. Polvilhe com queijo ralado e cubra com bechamel. Repita até esgotar os ingredientes. Finalize com bechamel e queijo ralado.
+10. Leve ao forno a 180°C durante 30-40 minutos até gratinar. Sirva com salada.
+⏱ 35
+
+## Bimby
+1. Coloque no copo o queijo parmesão e rale 15 seg/vel 10. Retire e reserve.
+2. Coloque no copo os legumes e o azeite, pique 5 seg/vel 7 e refogue 5 min/120°C/vel 2.
+⏱ 5
+3. Adicione a carne picada e cozinhe 8 min/120°C/vel colher inversa.
+⏱ 8
+4. Adicione o vinho branco, envolva com a ajuda da espátula e cozinhe 5 min/120°C/vel colher inversa.
+⏱ 5
+5. Adicione o tomate, o sal e a pimenta e cozinhe 20 min/100°C/vel colher inversa. Retire e reserve.
+⏱ 20
+6. Coloque no copo o leite, a manteiga, a farinha, o sal e a noz-moscada e cozinhe 12 min/90°C/vel 3.
+⏱ 12
+7. Pré-aqueça o forno a 180°C.
+8. Num pirex, coloque um pouco de bolonhesa no fundo, cubra com uma camada de placas de lasanha e uma camada de bolonhesa. Polvilhe com o queijo ralado reservado e cubra com bechamel. Repita até esgotar os ingredientes. Finalize com bechamel e queijo ralado.
+9. Leve ao forno a 180°C durante 30-40 minutos até gratinar. Sirva com salada.
+⏱ 35
