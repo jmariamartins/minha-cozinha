@@ -3,7 +3,7 @@ categoria: Sopa
 porções: 4
 tempo: 40
 dificuldade: Fácil
-modos: Normal
+modos: Normal, Bimby
 
 ## Ingredientes
 400 g   | grão-de-bico | 1 lata cozido, escorrido
@@ -36,3 +36,20 @@ gordura: 15
 7. Junte os espinafres e cozinhe mais 3 minutos até murcharem. Retifique o sal e a pimenta.
 ⏱ 3
 8. Sirva com um fio generoso de azeite cru e pão rústico.
+
+## Bimby
+1. Coloque no copo a cebola e o alho, pique 5 seg/vel 5. Baixe com a espátula.
+2. Adicione o azeite e refogue 4 min/120°C/vel 1.
+⏱ 4
+3. Adicione os cominhos e frite 1 min/120°C/vel 1 para libertar o aroma.
+⏱ 1
+4. Junte o tomate pelado e cozinhe 5 min/100°C/vel 1.
+⏱ 5
+5. Adicione metade do grão e o caldo de legumes. Coloque a outra metade do grão no cesto Varoma. Cozinhe 12 min/Varoma/vel 1.
+⏱ 12
+6. Coloque os espinafres sobre o grão no cesto Varoma. Cozinhe mais 3 min/Varoma/vel 1.
+⏱ 3
+7. Retire o Varoma e reserve. Triture o conteúdo do copo progressivamente vel 5 → 7 → 10, durante 30 segundos.
+8. Adicione o grão e os espinafres reservados do Varoma. Misture com a espátula. Retifique o sal e a pimenta.
+9. Sirva com um fio generoso de azeite cru e pão rústico.
+
