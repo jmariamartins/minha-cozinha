@@ -615,7 +615,7 @@ let checkedShop = {};
 let currentPlan = null;
 let planSettings = {
   dias: 4, pessoas: 2, almoco: true, jantar: true,
-  excluir: [], modos: [], dificuldade: null, otimizacao: 'variety', duracao: null
+  excluir: [], modos: [], dificuldade: null, otimizacao: 'variety', duracao: null, nutri: []
 };
 
 // ═══════════════════════════════════════════════
@@ -1490,6 +1490,15 @@ function renderPlannerForm() {
         </div>
         <div style="font-size:11px;color:var(--texto-suave);margin-top:5px">Rápida ≤30 min · Média 30-45 min · Demorada >45 min</div>
       </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Incluir apenas <span style="font-weight:400;color:var(--texto-suave)">(opcional)</span></div>
+        <div class="chip-group" id="nutriChips">
+          ${[['altaproteina','💪 Alta Proteína'],['lowcarb','🥩 Low Carb'],['lowfat','🫒 Low Fat']].map(([k,l]) =>
+            `<div class="chip${s.nutri.includes(k)?' active':''}" onclick="pNutri('${k}',this)">${l}</div>`
+          ).join('')}
+        </div>
+        <div style="font-size:11px;color:var(--texto-suave);margin-top:5px">Alta Proteína ≥25g · Low Carb ≤20g HC · Low Fat ≤10g gordura</div>
+      </div>
       <div>
         <div style="font-size:13px;font-weight:600;margin-bottom:8px">Otimizar para</div>
         <div class="chip-group">
@@ -1589,6 +1598,11 @@ function pDuracao(d, el) {
   document.querySelectorAll('#duracaoChips .chip').forEach(c => c.classList.remove('active'));
   if (planSettings.duracao) el.classList.add('active');
 }
+function pNutri(k, el) {
+  const i = planSettings.nutri.indexOf(k);
+  if (i >= 0) { planSettings.nutri.splice(i, 1); el.classList.remove('active'); }
+  else { planSettings.nutri.push(k); el.classList.add('active'); }
+}
 
 function gerarPlano() {
   const s = planSettings;
@@ -1606,12 +1620,20 @@ function gerarPlano() {
     if (s.duracao === 'Rápida'  && r.tempo > 30) return false;
     if (s.duracao === 'Média'   && (r.tempo <= 30 || r.tempo > 45)) return false;
     if (s.duracao === 'Demorada' && r.tempo <= 45) return false;
+    if (s.nutri.includes('altaproteina') && (r.nutricao?.proteina || 0) < 25) return false;
+    if (s.nutri.includes('lowcarb')      && (r.nutricao?.hidratos || 999) > 20) return false;
+    if (s.nutri.includes('lowfat')       && (r.nutricao?.gordura  || 999) > 10) return false;
     return true;
   });
 
   if (!pool.length) {
     document.getElementById('plannerContent').innerHTML = `<div class="inline-alert" style="margin:16px">⚠️ Sem receitas com estes filtros. <button onclick="currentPlan=null;renderPlannerForm()" style="color:var(--verde);background:none;border:none;cursor:pointer;font-weight:600">← Voltar</button></div>`;
     return;
+  }
+
+  if (s.nutri.length > 0 && pool.length < total) {
+    const continuar = confirm(`⚠️ Apenas ${pool.length} receita${pool.length===1?'':'s'} corresponde${pool.length===1?'':'m'} aos critérios nutricionais, mas o plano precisa de ${total}. Haverá repetições.\n\nContinuar mesmo assim?`);
+    if (!continuar) { currentPlan = null; renderPlannerForm(); return; }
   }
 
   pool = pool.sort(() => Math.random() - 0.5);
