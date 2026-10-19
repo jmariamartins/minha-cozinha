@@ -1976,6 +1976,7 @@ function renderPlanResult() {
     <button class="btn-outline" onclick="${plan.mode==='sugerido'?'gerarPlanoAI()':'gerarPlano()'}">🔄 Regenerar</button>
     <button class="btn-outline" onclick="exportPlan()" style="background:var(--verde);color:white;border-color:var(--verde)">↗ Exportar</button>
     <button class="btn-outline" onclick="exportPlanJSON()" style="background:#6366f1;color:white;border-color:#6366f1">📤 Exportar JSON</button>
+    <button class="btn-outline" onclick="exportShoppingListJSON()" style="background:#0891b2;color:white;border-color:#0891b2">🛒 Exportar lista</button>
   </div>
 
   <div class="cal-toggle">
@@ -2184,6 +2185,47 @@ function catIngredientes(items) {
     if (!placed) cats['📦 Outros'].push(item);
   });
   return Object.fromEntries(Object.entries(cats).filter(([, v]) => v.length > 0));
+}
+
+// ═══════════════════════════════════════════════
+// EXPORT SHOPPING LIST TO JSON
+// ═══════════════════════════════════════════════
+function exportShoppingListJSON() {
+  const plan = currentPlan;
+  if (!plan) return;
+
+  const shopItems = buildShoppingList(plan.recipes);
+  const cats = catIngredientes(shopItems);
+
+  const items = [];
+  Object.entries(cats).forEach(([cat, catItems]) => {
+    const catKey = cat.replace(/[^a-z]/gi, '');
+    catItems.forEach((item, i) => {
+      const id = `${catKey}${i}`;
+      const qty = fmtShopQty(item);
+      items.push({
+        name: item.displayName,
+        quantity: qty || '',
+        category: cat,
+        to_buy: !checkedShop[id]
+      });
+    });
+  });
+
+  const today = new Date();
+  const dateStr = today.toISOString().split('T')[0];
+  const payload = {
+    exported_at: today.toISOString(),
+    plan_name: `Plano Semanal ${dateStr}`,
+    items
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `lista-compras-${dateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 // ═══════════════════════════════════════════════
