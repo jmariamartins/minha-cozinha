@@ -1,0 +1,24 @@
+# Papa de Arroz
+categoria: Sobremesa
+porções: 4
+tempo: 15
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+100 g   | farinha de arroz | integral ou branca
+800 g   | água | dividida em 200g e 600g
+5 g     | xarope de agave | ou mel ou açúcar a gosto
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Bimby
+1. Coloque a farinha de arroz e 200 g de água no copo. Programe 1 min/vel 3,5.
+2. Adicione os restantes 600 g de água e o xarope de agave. Cozinhe 10 min/90°C/vel 3.
+⏱ 10
+3. Sirva de imediato. Pode adicionar gengibre em pó, pau de canela ou farinha de alfarroba a gosto.
+

@@ -1,0 +1,26 @@
+# Variante de Iogurte de Gelatina Light
+categoria: Sobremesa
+porções: 8
+tempo: 10
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+1000 g  | leite magro
+1 un    | iogurte natural magro
+1 saq   | gelatina light em pó com sabor | vegetal ou zero calorias, sabor a gosto
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Bimby
+1. Coloque todos os ingredientes no copo e programe 7 min/50°C/vel 4.
+⏱ 7
+2. Distribua por taças ou frascos apropriados.
+3. Para fermentar: pré-aqueça o forno a 50°C, desligue-o e coloque as taças dentro envoltas numa manta polar. Deixe repousar 8 horas. Em alternativa, use uma iogurteira.
+⏱ 480
+4. Após as 8 horas, mexa bem cada iogurte e leve ao frigorífico até solidificar.
+

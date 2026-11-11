@@ -1,0 +1,26 @@
+# Papas de Aveia com Claras
+categoria: Sobremesa
+porções: 2
+tempo: 25
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+250 g   | leite magro ou meio gordo
+40 g    | flocos de aveia
+40 g    | claras de ovo
+15 g    | mel
+q.b.    | canela em pó
+
+## Nutrição
+calorias: 292
+proteína: 17
+hidratos: 48
+gordura: 3
+
+## Bimby
+1. Coloque os flocos de aveia no copo e triture 10 seg/vel 10.
+2. Adicione os restantes ingredientes e programe 11 min/90°C/vel 3.
+⏱ 11
+3. Sirva ainda quente, polvilhada com mais canela a gosto.
+

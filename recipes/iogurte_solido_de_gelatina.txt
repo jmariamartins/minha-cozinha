@@ -1,0 +1,30 @@
+# Iogurte Sólido de Gelatina
+categoria: Sobremesa
+porções: 10
+tempo: 20
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+1250 g  | leite meio gordo | dividido em 1000g e 250g
+1 un    | iogurte natural
+85 g    | gelatina em pó com sabor | ex: ananás, morango ou maracujá
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Bimby
+1. Coloque 1000 g de leite e o iogurte no copo. Programe 5 min/50°C/vel 3.
+⏱ 5
+2. Deixe repousar, com o copo coberto com uma manta polar, durante 8 horas.
+⏱ 480
+3. Misture 30 seg/vel 3. Transfira a mistura para um recipiente e reserve.
+4. Sem lavar o copo, adicione 250 g de leite e aqueça 3 min/90°C/vel 3.
+⏱ 3
+5. Com a Bimby em vel 3, adicione a gelatina em pó pelo bocal da tampa e misture 30 seg. Aumente progressivamente para vel 9, passando por vel 3, 5, 7 e 9, durante 30 segundos.
+6. Com a Bimby em vel 3, adicione lentamente o iogurte reservado pelo bocal durante 1 minuto.
+7. Distribua por taças ou copos e leve ao frigorífico até solidificar.
+

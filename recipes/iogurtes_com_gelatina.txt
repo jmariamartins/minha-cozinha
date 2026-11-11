@@ -1,0 +1,27 @@
+# Iogurtes com Gelatina
+categoria: Sobremesa
+porções: 6
+tempo: 15
+dificuldade: Fácil
+modos: Bimby
+
+## Ingredientes
+1000 g  | leite gordo
+1 un    | iogurte natural
+1 saq   | gelatina em pó com sabor | sabor a gosto
+50 g    | açúcar
+40 g    | leite em pó
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Bimby
+1. Coloque no copo o leite, a gelatina, o iogurte, o açúcar e o leite em pó. Programe 5 min/50°C/vel 3.
+⏱ 5
+2. Distribua por taças ou frascos e cubra o copo com uma manta polar ou saco térmico. Deixe repousar 13 horas.
+⏱ 780
+3. Mexa suavemente cada iogurte e leve ao frigorífico. A gelatina dá mais consistência e torna o iogurte menos calórico.
+
