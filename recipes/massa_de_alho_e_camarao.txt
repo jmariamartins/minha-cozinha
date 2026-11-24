@@ -6,7 +6,7 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 # Massa de Alho e Camar\'e3o\
-categoria: Peixe\
+categoria: Massa\
 por\'e7\'f5es: 2\
 tempo: 22\
 dificuldade: F\'e1cil\
@@ -39,7 +39,7 @@ gordura: 32\
 \f1 \cf0 \uc0\u9201 
 \f0  8\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 2. Enquanto a massa coze, aque\'e7a o azeite numa frigideira larga em lume m\'e9dio. Junte o alho laminado e o piri-piri. Cozinhe 1 minuto at\'e9 o alho ficar dourado claro \'97 n\'e3o queime.\
+\cf0 2. Enquanto a massa coze, aque\'e7a o azeite numa frigideira larga em lume m\'e9dio. Junte o alho laminado e o piri-piri. Cozinhe 1 minuto at\'e9 o alho ficar dourado claro e n\'e3o queime.\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f1 \cf0 \uc0\u9201 
