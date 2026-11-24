@@ -33,7 +33,7 @@ hidratos: 90\
 gordura: 33\
 \
 ## Normal\
-1. Coza o esparguete em \'e1gua abundante com sal, seguindo as instru\'e7\'f5es da embalagem. Escorra e reserve. Guarde uma ch\'e1vena da \'e1gua da massa \'97 ajuda a ligar o molho se ficar seco.\
+1. Coza o esparguete em \'e1gua abundante com sal, seguindo as instru\'e7\'f5es da embalagem. Escorra e reserve. Guarde uma ch\'e1vena da \'e1gua da massa - ajuda a ligar o molho se ficar seco.\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f1 \cf0 \uc0\u9201 
