@@ -382,6 +382,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--areia);color:var(--texto)
         <button class="chip" onclick="setFilter('Massa',this)">🍝 Massa</button>
         <button class="chip" onclick="setFilter('Arroz',this)">🍚 Arroz</button>
         <button class="chip" onclick="setFilter('Sobremesa',this)">🍮 Sobremesa</button>
+        <button class="chip" onclick="setFilter('Lanche',this)">☕ Lanche</button>
       </div>
     </div>
     <div class="filter-row">
@@ -2429,12 +2430,14 @@ const SUBST = [
   { nome:'Farinha de trigo', cat:'Mercearia', alts:[
     { nome:'Farinha de arroz', racio:'1:1', nota:'Textura mais leve, boa para panados', tags:['sem-gluten'] },
     { nome:'Farinha de amêndoa', racio:'1:1', nota:'Mais húmida, reduzir líquidos na receita', tags:['mais-saudavel','sem-gluten'] },
-    { nome:'Farinha de aveia', racio:'1:1', nota:'Triturar flocos de aveia', tags:['mais-saudavel'] }
+    { nome:'Farinha de aveia', racio:'1:1', nota:'Triturar flocos de aveia', tags:['mais-saudavel'] },
+    { nome:'Farelo de aveia', racio:'20 a 30% da quantidade', nota:'Substitua 20% a 30% da farinha nas panquecas, crepes ou muffins por farelo de aveia', tags:['mais-saudavel'] }
   ]},
   { nome:'Pão ralado', cat:'Mercearia', alts:[
     { nome:'Flocos de aveia triturados', racio:'1:1', nota:'Mais crocante, ideal para panados', tags:['mais-saudavel'] },
     { nome:'Farinha de amêndoa', racio:'1:1', nota:'Para panados low-carb', tags:['mais-saudavel','sem-gluten'] },
-    { nome:'Pão seco triturado', racio:'1:1', nota:'Usar pão duro de véspera', tags:['mais-barato'] }
+    { nome:'Pão seco triturado', racio:'1:1', nota:'Usar pão duro de véspera', tags:['mais-barato'] },
+    { nome:'Farelo de aveia', racio:'20 a 30% da quantidade', nota:'Substitua 20% a 30% da farinha nas almôndegas, hambúrgueres vegetarianos ou panados para ir ao forno', tags:['mais-saudavel'] }
   ]},
   { nome:'Azeite', cat:'Mercearia', alts:[
     { nome:'Óleo de girassol', racio:'1:1', nota:'Para frituras, sabor mais neutro', tags:['mais-barato'] },
