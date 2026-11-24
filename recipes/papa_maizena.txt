@@ -1,5 +1,5 @@
 # Papa Maizena
-categoria: Sobremesa
+categoria: Lanche
 porções: 4
 tempo: 15
 dificuldade: Fácil
