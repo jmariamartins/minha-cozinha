@@ -1,5 +1,5 @@
 # Papas de Aveia com Claras
-categoria: Sobremesa
+categoria: Lanche
 porções: 2
 tempo: 25
 dificuldade: Fácil
