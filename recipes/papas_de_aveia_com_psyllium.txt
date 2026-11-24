@@ -1,0 +1,27 @@
+# Papas de Aveia com Psyllium
+
+categoria: Lanche
+porções: 1
+tempo: 10
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+45 g    | flocos de aveia integral
+5 g     | psyllium em pó | 1 colher de chá rasa
+400 ml  | líquido à escolha | leite de soja, leite de aveia, leite meio-gordo ou água
+1 pitada | canela em pó
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Normal
+1. Cozinhe os flocos de aveia em 350 ml de líquido num tacho pequeno em lume médio durante 3 a 4 minutos.
+⏱ 4
+2. Retire do lume, misture o psyllium com os 50 ml restantes de líquido e adicione às papas (o psyllium engrossa rapidamente).
+3. Deixe repousar 1 minuto antes de servir. Adicione canela e acompanhe com fruta ou sementes a gosto.
+⏱ 1
+

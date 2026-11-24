@@ -1,0 +1,25 @@
+# Papas de Aveia Clássicas
+
+categoria: Lanche
+porções: 1
+tempo: 10
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+80 g    | flocos de aveia integral
+475 ml  | líquido à escolha | leite de soja, leite de aveia, leite meio-gordo ou água
+1 pitada | canela em pó
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Normal
+1. Coloque os flocos de aveia e o líquido num tacho pequeno em lume médio.
+2. Cozinhe durante 4 a 5 minutos em lume brando, mexendo ocasionalmente, até a aveia absorver o líquido e ficar cremosa.
+⏱ 5
+3. Adicione a canela, envolva e sirva. Pode adicionar fruta fresca, nozes ou mel a gosto.
+

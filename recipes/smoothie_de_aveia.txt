@@ -1,0 +1,28 @@
+# Smoothie de Aveia
+
+categoria: Lanche
+porções: 1
+tempo: 5
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+40 g    | flocos de aveia integral
+25 g    | farelo de aveia
+275 ml  | leite de soja sem açúcar | ou leite de aveia, kefir líquido
+100 g   | banana congelada | ou 100 g de frutos vermelhos congelados
+0.5 cc  | canela em pó | ou 1 cc de linhaça moída
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Normal
+1. Coloque primeiro o líquido no copo do liquidificador, seguido dos flocos de aveia, do farelo de aveia e da fruta.
+2. Triture em velocidade alta durante 45 a 60 segundos até ficar completamente homogéneo.
+⏱ 1
+3. Deixe repousar 2 a 3 minutos antes de beber para a fibra solúvel engrossar naturalmente o batido.
+⏱ 3
+

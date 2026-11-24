@@ -1,0 +1,28 @@
+# Taça de Iogurte com Aveia
+
+categoria: Lanche
+porções: 1
+tempo: 15
+dificuldade: Fácil
+modos: Normal
+
+## Ingredientes
+30 g    | flocos de aveia integral
+25 g    | farelo de aveia
+200 g   | iogurte natural, skyr ou kefir natural
+q.b.    | fruta fresca | frutos vermelhos, kiwi ou maçã
+q.b.    | canela em pó | a gosto
+q.b.    | nozes picadas | a gosto, opcional
+
+## Nutrição
+calorias: 0
+proteína: 0
+hidratos: 0
+gordura: 0
+
+## Normal
+1. Misture os flocos de aveia e o farelo de aveia diretamente no iogurte, skyr ou kefir até ficarem bem incorporados.
+2. Deixe repousar no frigorífico durante 10 a 15 minutos (ou de um dia para o outro num frasco fechado) para a aveia hidratar e amolecer.
+⏱ 15
+3. Adicione a fruta, polvilhe com canela e junte nozes a gosto antes de servir.
+
