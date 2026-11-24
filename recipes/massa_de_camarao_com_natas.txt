@@ -1,5 +1,5 @@
 # Massa de Camarão com Natas
-categoria: Peixe
+categoria: Massa
 porções: 4
 tempo: 25
 dificuldade: Fácil
